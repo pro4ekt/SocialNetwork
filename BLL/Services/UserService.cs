@@ -26,7 +26,7 @@ namespace BLL.Services
             if (user == null)
             {
                 user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
-                var result = await Database.UserManager.CreateAsync(user, userDto.Password);
+                var result = Database.UserManager.Create(user, userDto.Password);
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
                 // добавляем роль

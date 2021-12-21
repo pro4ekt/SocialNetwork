@@ -100,8 +100,8 @@ namespace SocialNetwork.Controllers
             await UserService.SetInitialData(new UserDTO
             {
                 Email = "test@mail.ru",
-                UserName = "Test",
-                Password = "test",
+                UserName = "test@mail.ru",  
+                Password = "test666",
                 Name = "Семен Семенович Горбунков",
                 Address = "ул. Пушкина, д.47, кв.47",
                 Role = "admin",
