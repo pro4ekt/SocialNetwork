@@ -85,7 +85,9 @@ namespace SocialNetwork.Controllers
                     Password = model.Password,
                     Address = model.Address,
                     Name = model.Name,
-                    Role = "user"
+                    Role = "user",
+                    Age = model.Age,
+                    Info = model.Info
                 };
                 OperationDetails operationDetails = await UserService.Create(userDto);
                 if (operationDetails.Succedeed)
@@ -102,20 +104,24 @@ namespace SocialNetwork.Controllers
                 new UserDTO
                 {
                     Email = "test@mail.ru",
-                    UserName = "Test",
+                    UserName = "test@mail.ru",
                     Password = "test666",
-                    Name = "Семен Семенович Горбунков",
+                    Name = "Teste Admin",
                     Address = "ул. Пушкина, д.47, кв.47",
                     Role = "admin",
+                    Age = 15,
+                    Info = "Test Admin for SN"
                 },
                 new UserDTO
                 {
                     Email = "aboba@mail.ru",
-                    UserName = "Aboba",
+                    UserName = "aboba@mail.ru",
                     Password = "aboba666",
-                    Name = "Жмышенко Валерий Альбертович",
+                    Name = "Test User",
                     Address = "Samara",
                     Role = "user",
+                    Age = 54,
+                    Info = "Test User for SN"
                 }
             };
             List<string> roles = new List<string> {"user", "admin"};
