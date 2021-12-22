@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using DAL.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
+using static System.Data.Entity.DbContext;
 
 namespace DAL.EF
 {
-    public class ApplicationContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationContext : IdentityDbContext<ApplicationUser>, IDbContextFactory<ApplicationContext>
     {
-        public ApplicationContext(string conectionString) : base(conectionString) { }
+        public ApplicationContext()
+        {
+
+        }
+        public ApplicationContext(string conectionString) : base(conectionString) {}
 
         public DbSet<ClientProfile> ClientProfiles { get; set; }
+
+        public ApplicationContext Create()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
