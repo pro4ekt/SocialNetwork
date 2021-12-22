@@ -70,6 +70,24 @@ namespace BLL.Services
             await Create(adminDto);
         }
 
+        public async Task SetInitialData(List<UserDTO> usersDto, List<string> roles)
+        {
+            foreach (string roleName in roles)
+            {
+                var role = await Database.RoleManager.FindByNameAsync(roleName);
+                if (role == null)
+                {
+                    role = new ApplicationRole { Name = roleName };
+                    await Database.RoleManager.CreateAsync(role);
+                }
+            }
+
+            foreach (var userDto in usersDto)
+            {
+                await Create(userDto);
+            }
+        }
+
         public void Dispose()
         {
             Database.Dispose();

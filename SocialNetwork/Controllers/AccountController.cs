@@ -97,15 +97,29 @@ namespace SocialNetwork.Controllers
         }
         private async Task SetInitialDataAsync()
         {
-            await UserService.SetInitialData(new UserDTO
+            List<UserDTO> users = new List<UserDTO>
             {
-                Email = "test@mail.ru",
-                UserName = "test@mail.ru",  
-                Password = "test666",
-                Name = "Семен Семенович Горбунков",
-                Address = "ул. Пушкина, д.47, кв.47",
-                Role = "admin",
-            }, new List<string> { "user", "admin" });
+                new UserDTO
+                {
+                    Email = "test@mail.ru",
+                    UserName = "Test",
+                    Password = "test666",
+                    Name = "Семен Семенович Горбунков",
+                    Address = "ул. Пушкина, д.47, кв.47",
+                    Role = "admin",
+                },
+                new UserDTO
+                {
+                    Email = "aboba@mail.ru",
+                    UserName = "Aboba",
+                    Password = "aboba666",
+                    Name = "Жмышенко Валерий Альбертович",
+                    Address = "Samara",
+                    Role = "user",
+                }
+            };
+            List<string> roles = new List<string> {"user", "admin"};
+            await UserService.SetInitialData(users,roles);
         }
     }
 }
