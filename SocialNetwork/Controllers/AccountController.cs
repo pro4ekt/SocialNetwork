@@ -55,7 +55,7 @@ namespace SocialNetwork.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
             }
             return View(model);
@@ -64,7 +64,7 @@ namespace SocialNetwork.Controllers
         public ActionResult Logout()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult Register()
@@ -89,7 +89,7 @@ namespace SocialNetwork.Controllers
                 };
                 OperationDetails operationDetails = await UserService.Create(userDto);
                 if (operationDetails.Succedeed)
-                    return View("SuccessRegister");
+                    return View("Login");
                 else
                     ModelState.AddModelError(operationDetails.Property, operationDetails.Message);
             }
