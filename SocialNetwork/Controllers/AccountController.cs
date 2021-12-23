@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -29,11 +30,14 @@ namespace SocialNetwork.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-
+        
         [Authorize]
-        public ActionResult Home(UserDTO userDto)
+        public async Task<ActionResult> Home()
         {
-            return View(userDto);
+            HttpCookie cookie = Request.Cookies["user"];
+            cookie.Expires = DateTime.Now.AddMinutes(5);
+            UserDTO u = await UserService.FindById(cookie.Value);
+            return View(u);
         }
         public ActionResult Login()
         {
@@ -60,8 +64,11 @@ namespace SocialNetwork.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-
-                    return RedirectToAction("Home", await UserService.Find(userDto));
+                    UserDTO u =  await UserService.Find(userDto);
+                    HttpCookie cookie = new HttpCookie("user", u.Id);
+                    cookie.Expires = DateTime.Now.AddMinutes(5);
+                    Response.Cookies.Add(cookie);
+                    return RedirectToAction("Home","Account");
                 }
             }
             return View(model);
@@ -112,7 +119,7 @@ namespace SocialNetwork.Controllers
                     Email = "test@mail.ru",
                     UserName = "test@mail.ru",
                     Password = "test666",
-                    Name = "Teste Admin",
+                    Name = "Test Admin",
                     Address = "ул. Пушкина, д.47, кв.47",
                     Role = "admin",
                     Age = 15,
