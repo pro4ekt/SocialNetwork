@@ -30,6 +30,11 @@ namespace SocialNetwork.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Home(UserDTO userDto)
+        {
+            return View(userDto);
+        }
         public ActionResult Login()
         {
             return View();
@@ -55,7 +60,8 @@ namespace SocialNetwork.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    return RedirectToAction("Login", "Account");
+
+                    return RedirectToAction("Home", await UserService.Find(userDto));
                 }
             }
             return View(model);

@@ -55,6 +55,22 @@ namespace BLL.Services
             return claim;
         }
 
+        public async Task<UserDTO> Find(UserDTO userDto)
+        {
+            ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
+            if (user != null)
+            {
+                userDto.Info = user.ClientProfile.Info;
+                userDto.Address = user.ClientProfile.Address;
+                userDto.Info = user.ClientProfile.Info;
+                userDto.Age = user.ClientProfile.Age;
+                userDto.UserName = user.UserName;
+                userDto.Name = user.ClientProfile.Name;
+                userDto.Id = user.Id;
+            }
+            return userDto;
+        }
+
         // начальная инициализация бд
         public async Task SetInitialData(UserDTO adminDto, List<string> roles)
         {
