@@ -14,7 +14,7 @@ namespace DAL.EF
         }
         public ApplicationContext(string conectionString) : base(conectionString) {}
 
-        public DbSet<ClientProfile> ClientProfiles { get; set; }
+        public DbSet<MemberProfile> ClientProfiles { get; set; }
 
         public ApplicationContext Create()
         {

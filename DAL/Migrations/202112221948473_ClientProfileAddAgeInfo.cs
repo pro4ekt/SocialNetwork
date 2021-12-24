@@ -7,14 +7,12 @@
     {
         public override void Up()
         {
-            AddColumn("dbo.ClientProfiles", "Age", c => c.Int(nullable: false));
-            AddColumn("dbo.ClientProfiles", "Info", c => c.String());
+            RenameTable("ClientProfile","ManagerProfile");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.ClientProfiles", "Info");
-            DropColumn("dbo.ClientProfiles", "Age");
+            RenameTable("ManagerProfile", "ClientProfile");
         }
     }
 }

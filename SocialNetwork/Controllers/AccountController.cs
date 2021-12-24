@@ -30,15 +30,7 @@ namespace SocialNetwork.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-        
-        [Authorize]
-        public async Task<ActionResult> Home()
-        {
-            HttpCookie cookie = Request.Cookies["user"];
-            cookie.Expires = DateTime.Now.AddMinutes(5);
-            UserDTO u = await UserService.FindById(cookie.Value);
-            return View(u);
-        }
+
         public ActionResult Login()
         {
             return View();
@@ -64,11 +56,11 @@ namespace SocialNetwork.Controllers
                     {
                         IsPersistent = true
                     }, claim);
-                    UserDTO u =  await UserService.Find(userDto);
+                    UserDTO u =  await UserService.FindByEmail(userDto.Email);
                     HttpCookie cookie = new HttpCookie("user", u.Id);
                     cookie.Expires = DateTime.Now.AddMinutes(5);
                     Response.Cookies.Add(cookie);
-                    return RedirectToAction("Home","Account");
+                    return RedirectToAction("Profile","Member");
                 }
             }
             return View(model);
@@ -110,6 +102,7 @@ namespace SocialNetwork.Controllers
             }
             return View(model);
         }
+
         private async Task SetInitialDataAsync()
         {
             List<UserDTO> users = new List<UserDTO>

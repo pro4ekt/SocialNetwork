@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
-    public class ClientProfile
+    public class MemberProfile
     {
         [Key]
         [ForeignKey("ApplicationUser")]

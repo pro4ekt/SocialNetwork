@@ -1,0 +1,34 @@
+﻿@model BLL.DTO.UserDTO
+@{
+    ViewBag.Title = "FindUser";
+    Layout = "_ProfileLayout.cshtml";
+}
+
+<h2>Find User</h2>
+@using (Html.BeginForm("FindUser", "Member", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <table>
+        <tr>
+            <td><p>Введите Email пользователя которого хотите найти</p></td>
+            <td><input type="text" name="userToFind" /> </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Отправить" /> </td>
+            <td></td>
+        </tr>
+    </table>
+}
+@if (@Model != null && @Model.Email != null)
+{
+    <p> Name : @Model.Name</p>
+    <p> Email : @Model.Email</p>   
+    <p> Address : @Model.Address</p>
+    <p> Age : @Model.Age</p>
+    <p> Info : @Model.Info</p>
+}
+@if (Model == null)
+{
+    <p>There is no user like this</p>
+}
+

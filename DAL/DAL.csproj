@@ -59,10 +59,10 @@
     <Compile Include="EF\ApplicationContext.cs" />
     <Compile Include="Entities\ApplicationRole.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
-    <Compile Include="Entities\ClientProfile.cs" />
+    <Compile Include="Entities\MemberProfile.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
-    <Compile Include="Interfaces\IClientManager.cs" />
+    <Compile Include="Interfaces\IMemberManager.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Migrations\202112212355181_InitialCreate.cs" />
     <Compile Include="Migrations\202112212355181_InitialCreate.designer.cs">
@@ -76,9 +76,13 @@
     <Compile Include="Migrations\202112221948473_ClientProfileAddAgeInfo.designer.cs">
       <DependentUpon>202112221948473_ClientProfileAddAgeInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112232352486_ClientProfelRinameToMemberProfile.cs" />
+    <Compile Include="Migrations\202112232352486_ClientProfelRinameToMemberProfile.designer.cs">
+      <DependentUpon>202112232352486_ClientProfelRinameToMemberProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\ClientManager.cs" />
+    <Compile Include="Repositories\MemberManager.cs" />
     <Compile Include="Repositories\IdentityUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -101,6 +105,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112221948473_ClientProfileAddAgeInfo.resx">
       <DependentUpon>202112221948473_ClientProfileAddAgeInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112232352486_ClientProfelRinameToMemberProfile.resx">
+      <DependentUpon>202112232352486_ClientProfelRinameToMemberProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

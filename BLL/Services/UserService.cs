@@ -32,8 +32,8 @@ namespace BLL.Services
                 // добавляем роль
                 await Database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
                 // создаем профиль клиента
-                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name, Age = userDto.Age, Info = userDto.Info};
-                Database.ClientManager.Create(clientProfile);
+                MemberProfile clientProfile = new MemberProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name, Age = userDto.Age, Info = userDto.Info};
+                Database.MemberManager.Create(clientProfile);
                 await Database.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");
             }
@@ -55,9 +55,10 @@ namespace BLL.Services
             return claim;
         }
 
-        public async Task<UserDTO> Find(UserDTO userDto)
+        public async Task<UserDTO> FindByEmail(string email)
         {
-            ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
+            ApplicationUser user = await Database.UserManager.FindByEmailAsync(email);
+            UserDTO userDto = new UserDTO();
             if (user != null)
             {
                 userDto.Info = user.ClientProfile.Info;
@@ -67,8 +68,10 @@ namespace BLL.Services
                 userDto.UserName = user.UserName;
                 userDto.Name = user.ClientProfile.Name;
                 userDto.Id = user.Id;
+                userDto.Email = user.Email;
+                return userDto;
             }
-            return userDto;
+            return null;
         }
         public async Task<UserDTO> FindById(string id)
         {
@@ -83,25 +86,13 @@ namespace BLL.Services
                 userDto.UserName = user.UserName;
                 userDto.Name = user.ClientProfile.Name;
                 userDto.Email = user.Email;
+                userDto.Id = user.Id;
+                return userDto;
             }
-            return userDto;
+            return null;
         }
 
         // начальная инициализация бд
-        public async Task SetInitialData(UserDTO adminDto, List<string> roles)
-        {
-            foreach (string roleName in roles)
-            {
-                var role = await Database.RoleManager.FindByNameAsync(roleName);
-                if (role == null)
-                {
-                    role = new ApplicationRole { Name = roleName };
-                    await Database.RoleManager.CreateAsync(role);
-                }
-            }
-            await Create(adminDto);
-        }
-
         public async Task SetInitialData(List<UserDTO> usersDto, List<string> roles)
         {
             foreach (string roleName in roles)

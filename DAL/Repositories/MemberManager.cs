@@ -5,21 +5,21 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class ClientManager : IClientManager
+    public class MemberManager : IMemberManager
     {
         public ApplicationContext Database { get; set; }
-        public ClientManager(ApplicationContext db)
+        public MemberManager(ApplicationContext db)
         {
             Database = db;
         }
 
-        public void Create(ClientProfile item)
+        public void Create(MemberProfile item)
         {
             Database.ClientProfiles.Add(item);
             Database.SaveChanges();
         }
 
-        public Task<ClientProfile> Find(string id)
+        public Task<MemberProfile> Find(string id)
         {
             return Database.ClientProfiles.FindAsync(id);
         }

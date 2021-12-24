@@ -12,9 +12,8 @@ namespace BLL.Interfaces
     {
         Task<OperationDetails> Create(UserDTO userDto);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
-        Task<UserDTO> Find(UserDTO userDto);
+        Task<UserDTO> FindByEmail(string email);
         Task<UserDTO> FindById(string id);
-        Task SetInitialData(UserDTO adminDto, List<string> roles);
         Task SetInitialData(List<UserDTO> usersDto, List<string> roles);
     }
 }
