@@ -14,6 +14,7 @@ namespace BLL.Interfaces
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task<UserDTO> FindByEmail(string email);
         Task<UserDTO> FindById(string id);
+        Task<bool> EditProfile(string id, string name, string email, string info, string address, int age);
         Task SetInitialData(List<UserDTO> usersDto, List<string> roles);
     }
 }

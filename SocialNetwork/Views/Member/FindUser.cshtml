@@ -21,11 +21,48 @@
 }
 @if (@Model != null && @Model.Email != null)
 {
-    <p> Name : @Model.Name</p>
-    <p> Email : @Model.Email</p>   
-    <p> Address : @Model.Address</p>
-    <p> Age : @Model.Age</p>
-    <p> Info : @Model.Info</p>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Age)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Age)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Address)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Address)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Info)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Info)
+    </dd>
+
+</dl>
 }
 @if (Model == null)
 {

@@ -203,6 +203,8 @@
     <Content Include="Views\Member\Profile.cshtml" />
     <Content Include="Views\Member\_ProfileLayout.cshtml" />
     <Content Include="Views\Member\FindUser.cshtml" />
+    <Content Include="Views\Member\EditUserProfile.cshtml" />
+    <Content Include="Views\Member\Home.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

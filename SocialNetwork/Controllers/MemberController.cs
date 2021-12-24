@@ -9,6 +9,7 @@ using BLL.Interfaces;
 using BLL.Services;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
@@ -31,11 +32,17 @@ namespace SocialNetwork.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Home()
+        {
+            return View();
+        }
+
         [Authorize] 
         public async Task<ActionResult> Profile()
         {
             HttpCookie cookie = Request.Cookies["user"];
-            cookie.Expires = DateTime.Now.AddMinutes(5);
+            cookie.Expires = DateTime.Now.AddMinutes(2);
             UserDTO u = await UserService.FindById(cookie.Value);
             return View(u);
         }
@@ -53,6 +60,24 @@ namespace SocialNetwork.Controllers
         {
             UserDTO u = await UserService.FindByEmail(userToFind);
             return View("FindUser", u);
+        }
+
+        [Authorize]
+        public async Task<ActionResult> EditUserProfile()
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserDTO u = await UserService.FindById(cookie.Value);
+            return View(u);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditUserProfile(UserDTO model)
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserService.EditProfile(cookie.Value,model.Name,model.Email,model.Info,model.Address,model.Age);
+            return View("Home");
         }
     }
 }

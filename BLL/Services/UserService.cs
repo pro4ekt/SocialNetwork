@@ -61,12 +61,11 @@ namespace BLL.Services
             UserDTO userDto = new UserDTO();
             if (user != null)
             {
-                userDto.Info = user.ClientProfile.Info;
-                userDto.Address = user.ClientProfile.Address;
-                userDto.Info = user.ClientProfile.Info;
-                userDto.Age = user.ClientProfile.Age;
+                userDto.Info = user.MemberProfile.Info;
+                userDto.Address = user.MemberProfile.Address;
+                userDto.Age = user.MemberProfile.Age;
                 userDto.UserName = user.UserName;
-                userDto.Name = user.ClientProfile.Name;
+                userDto.Name = user.MemberProfile.Name;
                 userDto.Id = user.Id;
                 userDto.Email = user.Email;
                 return userDto;
@@ -79,17 +78,29 @@ namespace BLL.Services
             UserDTO userDto = new UserDTO();
             if (user != null)
             {
-                userDto.Info = user.ClientProfile.Info;
-                userDto.Address = user.ClientProfile.Address;
-                userDto.Info = user.ClientProfile.Info;
-                userDto.Age = user.ClientProfile.Age;
+                userDto.Info = user.MemberProfile.Info;
+                userDto.Address = user.MemberProfile.Address;
+                userDto.Age = user.MemberProfile.Age;
                 userDto.UserName = user.UserName;
-                userDto.Name = user.ClientProfile.Name;
+                userDto.Name = user.MemberProfile.Name;
                 userDto.Email = user.Email;
                 userDto.Id = user.Id;
                 return userDto;
             }
             return null;
+        }
+
+        public async Task<bool> EditProfile(string id,string name, string email, string info, string address,int age)
+        {
+            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Address = address;
+            Database.UserManager.FindByIdAsync(id).Result.Email = email;
+            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Age = age;
+            Database.UserManager.FindByIdAsync(id).Result.UserName = email;
+            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Age = age;
+            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Name = name;
+            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Info = info;
+            await Database.SaveAsync();
+            return true;
         }
 
         // начальная инициализация бд

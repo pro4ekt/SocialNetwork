@@ -7,12 +7,12 @@
     {
         public override void Up()
         {
-            RenameTable("ClientProfile","ManagerProfile");
+            RenameTable("MemberProfile","ManagerProfile");
         }
         
         public override void Down()
         {
-            RenameTable("ManagerProfile", "ClientProfile");
+            RenameTable("ManagerProfile", "MemberProfile");
         }
     }
 }

@@ -19,11 +19,6 @@ namespace DAL.Repositories
             Database.SaveChanges();
         }
 
-        public Task<MemberProfile> Find(string id)
-        {
-            return Database.ClientProfiles.FindAsync(id);
-        }
-
         public void Dispose()
         {
             Database.Dispose();

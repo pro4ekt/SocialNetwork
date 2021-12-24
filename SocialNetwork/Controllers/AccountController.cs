@@ -58,7 +58,7 @@ namespace SocialNetwork.Controllers
                     }, claim);
                     UserDTO u =  await UserService.FindByEmail(userDto.Email);
                     HttpCookie cookie = new HttpCookie("user", u.Id);
-                    cookie.Expires = DateTime.Now.AddMinutes(5);
+                    cookie.Expires = DateTime.Now.AddMinutes(2);
                     Response.Cookies.Add(cookie);
                     return RedirectToAction("Profile","Member");
                 }

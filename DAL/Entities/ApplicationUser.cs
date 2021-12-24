@@ -4,6 +4,6 @@ namespace DAL.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public virtual MemberProfile ClientProfile { get; set; }
+        public virtual MemberProfile MemberProfile { get; set; }
     }
 }
