@@ -79,5 +79,11 @@ namespace SocialNetwork.Controllers
             UserService.EditProfile(cookie.Value,model.Name,model.Email,model.Info,model.Address,model.Age);
             return View("Home");
         }
+
+        [Authorize]
+        public ActionResult Chat()
+        {
+            return View();
+        }
     }
 }

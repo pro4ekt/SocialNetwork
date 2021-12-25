@@ -24,6 +24,7 @@ namespace SocialNetwork.App_Start
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
             });
+            app.MapSignalR();
         }
 
         private IUserService CreateUserService()

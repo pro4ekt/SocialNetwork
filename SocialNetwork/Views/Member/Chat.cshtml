@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "ChatView";
+    Layout = "_ProfileLayout.cshtml";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body1 {
+        margin: 0 auto;
+        max-width: 800px;
+        padding: 0 20px;
+    }
+
+    .container1 {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .darker {
+        border-color: #ccc;
+        background-color: #ddd;
+    }
+
+    .container1::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .container1 img {
+        float: left;
+        max-width: 60px;
+        width: 100%;
+        margin-right: 20px;
+        border-radius: 50%;
+    }
+
+        .container1 img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+
+    .time-right {
+        float: right;
+        color: #aaa;
+    }
+
+    .time-left {
+        float: left;
+        color: #999;
+    }
+</style>
+
+<div class="container">
+    <h3>Chat Box</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5>Users</h5>
+            <ul id="user"></ul>
+        </div>
+        <div class="panel-body">
+            <h5>Chat Message</h5>
+            <div class="" id="message">
+
+            </div>
+
+        </div>
+        <div class="panel-footer">
+            <div class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" id="txt" placeholder="Search">
+                <button class="btn btn-secondary my-2 my-sm-0" id="send">Send</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+    var hub = $.connection.chatHub;
+    debugger;
+    hub.client.message = function (msg) {
+        // $("#message").append("<li>" + msg + "</li>")
+
+        $("#message").append(chatTemplate(msg));
+    }
+
+    hub.client.user = function (msg) {
+        $("#user").append("<li>" + msg + "</li>")
+    }
+
+    $.connection.hub.start(function () {
+        $("#send").click(function () {
+            hub.server.send($("#txt").val());
+            $("#txt").val(" ");
+        })
+    })
+
+    function chatTemplate(msg)
+    {
+        var result = "";
+        var dt = new Date();
+        var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+        if (msg.split("~")[0] == "You") {
+            result += "<div class='container1'>" +
+              "<img src='/w3images/bandmember.jpg' alt='Avatar' style='width:100%;'>" +
+              "<p>" + msg.split("~")[1] + "</p>" +
+              "<span class='time-right'>" + time + "</span> " +
+              "</div>";
+        } else {
+            result += "<div class='container1 darker'>" +
+             "<img src='/w3images/bandmember.jpg' alt='Avatar' style='width:100%;'>" +
+             "<p>" + msg.split("~")[1] + "</p>" +
+             "<span class='time-right'>" + time + "</span> " +
+             "</div>";
+        }
+
+
+
+        return result;
+    }
+    </script>
+
+}
