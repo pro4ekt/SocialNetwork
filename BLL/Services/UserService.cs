@@ -33,7 +33,7 @@ namespace BLL.Services
                 await Database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
                 // создаем профиль клиента
                 ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name, Age = userDto.Age, Info = userDto.Info};
-                Database.MemberManager.Create(clientProfile);
+                Database.ClientManager.Create(clientProfile);
                 await Database.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");
             }
@@ -61,11 +61,11 @@ namespace BLL.Services
             UserDTO userDto = new UserDTO();
             if (user != null)
             {
-                userDto.Info = user.MemberProfile.Info;
-                userDto.Address = user.MemberProfile.Address;
-                userDto.Age = user.MemberProfile.Age;
+                userDto.Info = user.ClientProfile.Info;
+                userDto.Address = user.ClientProfile.Address;
+                userDto.Age = user.ClientProfile.Age;
                 userDto.UserName = user.UserName;
-                userDto.Name = user.MemberProfile.Name;
+                userDto.Name = user.ClientProfile.Name;
                 userDto.Id = user.Id;
                 userDto.Email = user.Email;
                 return userDto;
@@ -78,11 +78,11 @@ namespace BLL.Services
             UserDTO userDto = new UserDTO();
             if (user != null)
             {
-                userDto.Info = user.MemberProfile.Info;
-                userDto.Address = user.MemberProfile.Address;
-                userDto.Age = user.MemberProfile.Age;
+                userDto.Info = user.ClientProfile.Info;
+                userDto.Address = user.ClientProfile.Address;
+                userDto.Age = user.ClientProfile.Age;
                 userDto.UserName = user.UserName;
-                userDto.Name = user.MemberProfile.Name;
+                userDto.Name = user.ClientProfile.Name;
                 userDto.Email = user.Email;
                 userDto.Id = user.Id;
                 return userDto;
@@ -92,13 +92,13 @@ namespace BLL.Services
 
         public async Task<bool> EditProfile(string id,string name, string email, string info, string address,int age)
         {
-            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Address = address;
+            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Address = address;
             Database.UserManager.FindByIdAsync(id).Result.Email = email;
-            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Age = age;
+            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
             Database.UserManager.FindByIdAsync(id).Result.UserName = email;
-            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Age = age;
-            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Name = name;
-            Database.UserManager.FindByIdAsync(id).Result.MemberProfile.Info = info;
+            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
+            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Name = name;
+            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Info = info;
             await Database.SaveAsync();
             return true;
         }

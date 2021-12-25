@@ -29,7 +29,7 @@ namespace DAL.Repositories
             get { return userManager; }
         }
 
-        public IClientManager MemberManager
+        public IClientManager ClientManager
         {
             get { return _memberManager; }
         }
