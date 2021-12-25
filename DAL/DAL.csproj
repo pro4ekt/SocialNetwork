@@ -59,7 +59,7 @@
     <Compile Include="EF\ApplicationContext.cs" />
     <Compile Include="Entities\ApplicationRole.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
-    <Compile Include="Entities\MemberProfile.cs" />
+    <Compile Include="Entities\ClientProfile.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Interfaces\IMemberManager.cs" />
@@ -68,17 +68,9 @@
     <Compile Include="Migrations\202112212355181_InitialCreate.designer.cs">
       <DependentUpon>202112212355181_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112221438503_AddAbobaUser.cs" />
-    <Compile Include="Migrations\202112221438503_AddAbobaUser.designer.cs">
-      <DependentUpon>202112221438503_AddAbobaUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112221948473_ClientProfileAddAgeInfo.cs" />
-    <Compile Include="Migrations\202112221948473_ClientProfileAddAgeInfo.designer.cs">
-      <DependentUpon>202112221948473_ClientProfileAddAgeInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112232352486_ClientProfelRinameToMemberProfile.cs" />
-    <Compile Include="Migrations\202112232352486_ClientProfelRinameToMemberProfile.designer.cs">
-      <DependentUpon>202112232352486_ClientProfelRinameToMemberProfile.cs</DependentUpon>
+    <Compile Include="Migrations\202112251606298_ErrorFix.cs" />
+    <Compile Include="Migrations\202112251606298_ErrorFix.designer.cs">
+      <DependentUpon>202112251606298_ErrorFix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,14 +92,8 @@
     <EmbeddedResource Include="Migrations\202112212355181_InitialCreate.resx">
       <DependentUpon>202112212355181_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112221438503_AddAbobaUser.resx">
-      <DependentUpon>202112221438503_AddAbobaUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112221948473_ClientProfileAddAgeInfo.resx">
-      <DependentUpon>202112221948473_ClientProfileAddAgeInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112232352486_ClientProfelRinameToMemberProfile.resx">
-      <DependentUpon>202112232352486_ClientProfelRinameToMemberProfile.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112251606298_ErrorFix.resx">
+      <DependentUpon>202112251606298_ErrorFix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

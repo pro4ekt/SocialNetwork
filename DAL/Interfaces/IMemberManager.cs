@@ -6,6 +6,6 @@ namespace DAL.Interfaces
 {
     public interface IMemberManager : IDisposable
     {
-        void Create(MemberProfile item);
+        void Create(ClientProfile item);
     }
 }

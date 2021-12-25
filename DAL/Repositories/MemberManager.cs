@@ -13,7 +13,7 @@ namespace DAL.Repositories
             Database = db;
         }
 
-        public void Create(MemberProfile item)
+        public void Create(ClientProfile item)
         {
             Database.ClientProfiles.Add(item);
             Database.SaveChanges();

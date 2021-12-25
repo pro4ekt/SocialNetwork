@@ -7,13 +7,13 @@ namespace DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class ClientProfelRinameToMemberProfile : IMigrationMetadata
+    public sealed partial class ErrorFix : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ClientProfelRinameToMemberProfile));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ErrorFix));
         
         string IMigrationMetadata.Id
         {
-            get { return "202112232352486_ClientProfelRinameToMemberProfile"; }
+            get { return "202112251606298_ErrorFix"; }
         }
         
         string IMigrationMetadata.Source
