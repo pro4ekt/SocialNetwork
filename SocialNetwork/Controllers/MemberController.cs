@@ -42,7 +42,6 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> Profile()
         {
             HttpCookie cookie = Request.Cookies["user"];
-            cookie.Expires = DateTime.Now.AddMinutes(2);
             UserDTO u = await UserService.FindById(cookie.Value);
             return View(u);
         }

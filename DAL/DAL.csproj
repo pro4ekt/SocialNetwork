@@ -62,7 +62,7 @@
     <Compile Include="Entities\ClientProfile.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
-    <Compile Include="Interfaces\IMemberManager.cs" />
+    <Compile Include="Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Migrations\202112212355181_InitialCreate.cs" />
     <Compile Include="Migrations\202112212355181_InitialCreate.designer.cs">
@@ -74,7 +74,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\MemberManager.cs" />
+    <Compile Include="Repositories\ClientManager.cs" />
     <Compile Include="Repositories\IdentityUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

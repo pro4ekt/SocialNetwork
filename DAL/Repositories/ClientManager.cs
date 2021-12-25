@@ -5,10 +5,10 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class MemberManager : IMemberManager
+    public class ClientManager : IClientManager
     {
         public ApplicationContext Database { get; set; }
-        public MemberManager(ApplicationContext db)
+        public ClientManager(ApplicationContext db)
         {
             Database = db;
         }

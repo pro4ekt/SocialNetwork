@@ -7,7 +7,7 @@ namespace DAL.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         ApplicationUserManager UserManager { get; }
-        IMemberManager MemberManager { get; }
+        IClientManager MemberManager { get; }
         ApplicationRoleManager RoleManager { get; }
         Task SaveAsync();
     }

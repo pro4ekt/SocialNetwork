@@ -14,14 +14,14 @@ namespace DAL.Repositories
 
         private ApplicationUserManager userManager;
         private ApplicationRoleManager roleManager;
-        private IMemberManager _memberManager;
+        private IClientManager _memberManager;
 
         public IdentityUnitOfWork(string connectionString)
         {
             db = new ApplicationContext(connectionString);
             userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
-            _memberManager = new MemberManager(db);
+            _memberManager = new ClientManager(db);
         }
 
         public ApplicationUserManager UserManager
@@ -29,7 +29,7 @@ namespace DAL.Repositories
             get { return userManager; }
         }
 
-        public IMemberManager MemberManager
+        public IClientManager MemberManager
         {
             get { return _memberManager; }
         }

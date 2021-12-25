@@ -4,7 +4,7 @@ using DAL.Entities;
 
 namespace DAL.Interfaces
 {
-    public interface IMemberManager : IDisposable
+    public interface IClientManager : IDisposable
     {
         void Create(ClientProfile item);
     }
