@@ -219,6 +219,8 @@
     <Content Include="Views\Member\EditUserProfile.cshtml" />
     <Content Include="Views\Member\Home.cshtml" />
     <Content Include="Views\Member\Chat.cshtml" />
+    <Content Include="Views\Member\AddFriend.cshtml" />
+    <Content Include="Views\Member\YourFriends.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

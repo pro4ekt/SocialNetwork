@@ -1,4 +1,6 @@
-﻿namespace BLL.DTO
+﻿using System.Collections.Generic;
+
+namespace BLL.DTO
 {
     public class UserDTO
     {
@@ -11,5 +13,11 @@
         public string Name { get; set; }
         public string Address { get; set; }
         public string Role { get; set; }
+        public List<FriendsDTO> Friends { get; set; }
+
+        public UserDTO()
+        {
+            Friends = new List<FriendsDTO>();
+        }
     }
 }

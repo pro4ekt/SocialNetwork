@@ -40,7 +40,6 @@ namespace SocialNetwork.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
-            await SetInitialDataAsync();
             if (ModelState.IsValid)
             {
                 UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
@@ -72,8 +71,9 @@ namespace SocialNetwork.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        public ActionResult Register()
+        public async Task<ActionResult> Register()
         {
+            await SetInitialDataAsync();
             return View();
         }
 
@@ -81,7 +81,6 @@ namespace SocialNetwork.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
         {
-            await SetInitialDataAsync();
             if (ModelState.IsValid)
             {
                 UserDTO userDto = new UserDTO

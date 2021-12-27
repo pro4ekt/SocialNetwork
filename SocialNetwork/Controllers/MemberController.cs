@@ -39,7 +39,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize] 
-        public async Task<ActionResult> Profile()
+        public new async Task<ActionResult> Profile()
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO u = await UserService.FindById(cookie.Value);
@@ -75,7 +75,7 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> EditUserProfile(UserDTO model)
         {
             HttpCookie cookie = Request.Cookies["user"];
-            UserService.EditProfile(cookie.Value,model.Name,model.Email,model.Info,model.Address,model.Age);
+            bool b = await UserService.EditProfile(cookie.Value,model.Name,model.Email,model.Info,model.Address,model.Age);
             return View("Home");
         }
 
@@ -83,6 +83,31 @@ namespace SocialNetwork.Controllers
         public ActionResult Chat()
         {
             return View();
+        }
+
+        [Authorize]
+        public ActionResult AddFriend(UserDTO u)
+        {
+            return View(u);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddFriend(string friendEmail)
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserDTO u2 = await UserService.FindByEmail(friendEmail);
+            bool b = await UserService.AddFriend(cookie.Value, u2.Id);
+            return RedirectToAction("Home");
+        }
+
+        [Authorize]
+        public async Task<ActionResult> YourFriends()
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserDTO  u1 = await UserService.FindById(cookie.Value);
+            return View(u1);
         }
     }
 }

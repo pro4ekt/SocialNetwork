@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -68,6 +69,10 @@ namespace BLL.Services
                 userDto.Name = user.ClientProfile.Name;
                 userDto.Id = user.Id;
                 userDto.Email = user.Email;
+                foreach (var f in user.ClientProfile.Friends)
+                {
+                    userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
+                }
                 return userDto;
             }
             return null;
@@ -85,6 +90,10 @@ namespace BLL.Services
                 userDto.Name = user.ClientProfile.Name;
                 userDto.Email = user.Email;
                 userDto.Id = user.Id;
+                foreach (var f in user.ClientProfile.Friends)
+                {
+                    userDto.Friends.Add(new FriendsDTO{Id = f.Id, FriendId = f.FriendId});
+                }
                 return userDto;
             }
             return null;
@@ -92,15 +101,49 @@ namespace BLL.Services
 
         public async Task<bool> EditProfile(string id,string name, string email, string info, string address,int age)
         {
-            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Address = address;
-            Database.UserManager.FindByIdAsync(id).Result.Email = email;
-            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
-            Database.UserManager.FindByIdAsync(id).Result.UserName = email;
-            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
-            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Name = name;
-            Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Info = info;
-            await Database.SaveAsync();
-            return true;
+            try
+            {
+                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Address = address;
+                Database.UserManager.FindByIdAsync(id).Result.Email = email;
+                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
+                Database.UserManager.FindByIdAsync(id).Result.UserName = email;
+                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
+                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Name = name;
+                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Info = info;
+                await Database.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddFriend(string id, string friendId)
+        {
+            try
+            {
+                Friends f1 = new Friends
+                {
+                    Id = id,
+                    FriendId = friendId
+                };
+                Friends f2 = new Friends
+                {
+                    Id = friendId,
+                    FriendId = id
+                };
+                Database.FriendsManager.Create(f1);
+                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Friends.Add(f1);
+                Database.FriendsManager.Create(f2);
+                Database.UserManager.FindByIdAsync(friendId).Result.ClientProfile.Friends.Add(f2);
+                await Database.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         // начальная инициализация бд

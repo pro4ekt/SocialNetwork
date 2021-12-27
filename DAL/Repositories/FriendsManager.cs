@@ -4,17 +4,17 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
-    public class ClientManager : IClientManager
+    public class FriendsManager : IFriendsManager
     {
         public ApplicationContext Database { get; set; }
-        public ClientManager(ApplicationContext db)
+        public FriendsManager(ApplicationContext db)
         {
             Database = db;
         }
 
-        public void Create(ClientProfile item)
+        public void Create(Friends item)
         {
-            Database.ClientProfiles.Add(item);
+            Database.Friends.Add(item);
             Database.SaveChanges();
         }
 

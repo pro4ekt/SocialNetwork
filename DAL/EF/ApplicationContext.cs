@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using DAL.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using static System.Data.Entity.DbContext;
@@ -15,6 +16,7 @@ namespace DAL.EF
         public ApplicationContext(string conectionString) : base(conectionString) {}
 
         public DbSet<ClientProfile> ClientProfiles { get; set; }
+        public DbSet<Friends> Friends { get; set; }
 
         public ApplicationContext Create()
         {

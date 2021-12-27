@@ -16,5 +16,11 @@ namespace DAL.Entities
         public string Info { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual List<Friends> Friends { get; set; }
+
+        public ClientProfile()
+        {
+            Friends = new List<Friends>();
+        }
     }
 }
