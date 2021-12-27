@@ -1,14 +1,26 @@
 ﻿@model BLL.DTO.UserDTO
-
 @{
+    ViewBag.Title = "FindUser";
     Layout = "_ProfileLayout.cshtml";
-    ViewBag.Title = "Profile";
 }
 
-<h2>Your Profile</h2>
-
-<div>
-    <hr />
+<h2>Find User</h2>
+@using (Html.BeginForm("FindUser", "Client", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <table>
+        <tr>
+            <td><p>Введите Email пользователя которого хотите найти</p></td>
+            <td><input type="text" name="userToFind" /> </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Поиск" /> </td>
+            <td></td>
+        </tr>
+    </table>
+}
+@if (@Model != null && @Model.Email != null)
+{
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Name)
@@ -17,7 +29,7 @@
         <dd>
             @Html.DisplayFor(model => model.Name)
         </dd>
-        
+
         <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
@@ -49,6 +61,12 @@
         <dd>
             @Html.DisplayFor(model => model.Info)
         </dd>
-
     </dl>
-</div>
+    @Html.ActionLink("Добавить в друзья", "AddFriend", "Client",new { friendId = Model.Id},null)
+    <hr />
+}
+@if (Model == null)
+{
+    <p>There is no user like this</p>
+}
+

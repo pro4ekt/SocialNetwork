@@ -14,7 +14,7 @@ using SocialNetwork.Models;
 namespace SocialNetwork.Controllers
 {
     [Authorize]
-    public class MemberController : Controller
+    public class ClientController : Controller
     {
         private IUserService UserService
         {
@@ -58,7 +58,7 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> FindUser(string userToFind)
         {
             UserDTO u = await UserService.FindByEmail(userToFind);
-            return View("FindUser", u);
+            return RedirectToAction("FindUser", u);
         }
 
         [Authorize]
@@ -85,21 +85,16 @@ namespace SocialNetwork.Controllers
             return View();
         }
 
-        [Authorize]
-        public ActionResult AddFriend(UserDTO u)
-        {
-            return View(u);
-        }
 
         [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddFriend(string friendEmail)
+        public async Task<ActionResult> AddFriend(string friendId)
         {
             HttpCookie cookie = Request.Cookies["user"];
-            UserDTO u2 = await UserService.FindByEmail(friendEmail);
+            UserDTO u2 = await UserService.FindById(friendId);
             bool b = await UserService.AddFriend(cookie.Value, u2.Id);
-            return RedirectToAction("Home");
+            if(b)
+                return RedirectToAction("Home");
+            return RedirectToAction("FindUser",u2);
         }
 
         [Authorize]
@@ -107,7 +102,12 @@ namespace SocialNetwork.Controllers
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO  u1 = await UserService.FindById(cookie.Value);
-            return View(u1);
+            List<UserDTO> users = new List<UserDTO>();
+            foreach (var f in u1.Friends)
+            {
+                users.Add(await UserService.FindById(f.FriendId));
+            }
+            return View(users);
         }
     }
 }

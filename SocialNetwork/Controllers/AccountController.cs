@@ -59,7 +59,7 @@ namespace SocialNetwork.Controllers
                     HttpCookie cookie = new HttpCookie("user", u.Id);
                     cookie.Expires = DateTime.Now.AddMinutes(20);
                     Response.Cookies.Add(cookie);
-                    return RedirectToAction("Profile","Member");
+                    return RedirectToAction("Profile", "Client");
                 }
             }
             return View(model);

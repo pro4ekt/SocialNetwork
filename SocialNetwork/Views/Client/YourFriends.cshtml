@@ -1,0 +1,30 @@
+﻿@model List<BLL.DTO.UserDTO>
+@{
+    ViewBag.Title = "FindUser";
+    Layout = "_ProfileLayout.cshtml";
+}
+<h2>YourFriends</h2>
+
+@foreach (var f in Model)
+{
+    <dl class="dl-horizontal">
+        <dd>
+            <b>Name</b>: @f.Name
+        </dd>
+        <dd>
+            <b>Email</b>: @f.Email
+        </dd>
+        <dd>
+            <b>Address</b>: @f.Address
+        </dd>
+        <dd>
+            <b>Age</b>: @f.Age
+        </dd>
+        <dd>
+            <b>Info</b>: @f.Info
+        </dd>
+    </dl>
+    <hr />
+}
+
+
