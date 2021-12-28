@@ -32,13 +32,11 @@ namespace SocialNetwork.Controllers
             }
         }
 
-        [Authorize]
         public ActionResult Home()
         {
             return View();
         }
 
-        [Authorize] 
         public new async Task<ActionResult> Profile()
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -46,13 +44,11 @@ namespace SocialNetwork.Controllers
             return View(u);
         }
 
-        [Authorize]
         public ActionResult FindUser(UserDTO u)
         {
             return View(u);
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> FindUser(string userToFind)
@@ -61,7 +57,6 @@ namespace SocialNetwork.Controllers
             return RedirectToAction("FindUser", u);
         }
 
-        [Authorize]
         public async Task<ActionResult> EditUserProfile()
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -69,7 +64,6 @@ namespace SocialNetwork.Controllers
             return View(u);
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditUserProfile(UserDTO model)
@@ -79,14 +73,12 @@ namespace SocialNetwork.Controllers
             return View("Home");
         }
 
-        [Authorize]
         public ActionResult Chat()
         {
             return View();
         }
 
 
-        [Authorize]
         public async Task<ActionResult> AddFriend(string friendId)
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -97,7 +89,16 @@ namespace SocialNetwork.Controllers
             return RedirectToAction("FindUser",u2);
         }
 
-        [Authorize]
+        public async Task<ActionResult> RemoveFriend(string friendId)
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserDTO u2 = await UserService.FindById(friendId);
+            bool b = await UserService.RemoveFriend(cookie.Value, u2.Id);
+            if (b)
+                return RedirectToAction("Home");
+            return RedirectToAction("YourFriends");
+        }
+
         public async Task<ActionResult> YourFriends()
         {
             HttpCookie cookie = Request.Cookies["user"];

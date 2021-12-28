@@ -1,4 +1,5 @@
-﻿using DAL.EF;
+﻿using System.Threading.Tasks;
+using DAL.EF;
 using DAL.Entities;
 using DAL.Interfaces;
 
@@ -16,6 +17,11 @@ namespace DAL.Repositories
         {
             Database.ClientProfiles.Add(item);
             Database.SaveChanges();
+        }
+
+        public async Task<ClientProfile> Find(string id)
+        {
+            return await Database.ClientProfiles.FindAsync(id);
         }
 
         public void Dispose()

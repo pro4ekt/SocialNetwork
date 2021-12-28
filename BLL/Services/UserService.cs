@@ -123,20 +123,36 @@ namespace BLL.Services
         {
             try
             {
+                if (id == friendId)
+                    throw new Exception();
                 Friends f1 = new Friends
                 {
                     Id = id,
-                    FriendId = friendId
-                };
-                Friends f2 = new Friends
-                {
-                    Id = friendId,
-                    FriendId = id
+                    FriendId = friendId,
+                    ClientProfile = await Database.ClientManager.Find(id)
                 };
                 Database.FriendsManager.Create(f1);
-                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Friends.Add(f1);
-                Database.FriendsManager.Create(f2);
-                Database.UserManager.FindByIdAsync(friendId).Result.ClientProfile.Friends.Add(f2);
+                Database.UserManager.FindByIdAsync(friendId).Result.ClientProfile.Friends.Add(f1);
+                await Database.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveFriend(string id, string friendId)
+        {
+            try
+            {
+                Friends f1 = new Friends
+                {
+                    Id = id,
+                    FriendId = friendId,
+                    ClientProfile = await Database.ClientManager.Find(id)
+                };
+                Database.FriendsManager.Remove(f1);
                 await Database.SaveAsync();
                 return true;
             }

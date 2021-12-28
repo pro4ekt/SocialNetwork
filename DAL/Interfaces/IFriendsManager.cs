@@ -10,5 +10,6 @@ namespace DAL.Interfaces
     public interface IFriendsManager : IDisposable
     { 
         void Create(Friends item);
+        void Remove(Friends item);
     }
 }

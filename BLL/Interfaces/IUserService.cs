@@ -16,6 +16,7 @@ namespace BLL.Interfaces
         Task<UserDTO> FindById(string id);
         Task<bool> EditProfile(string id, string name, string email, string info, string address, int age);
         Task<bool> AddFriend(string id, string friendId);
+        Task<bool> RemoveFriend(string id, string friendId);
         Task SetInitialData(List<UserDTO> usersDto, List<string> roles);
     }
 }
