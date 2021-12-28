@@ -73,7 +73,6 @@ namespace SocialNetwork.Controllers
 
         public async Task<ActionResult> Register()
         {
-            await SetInitialDataAsync();
             return View();
         }
 
@@ -88,7 +87,7 @@ namespace SocialNetwork.Controllers
                     Email = model.Email,
                     Password = model.Password,
                     Address = model.Address,
-                    Name = model.Name,
+                    UserName = model.UserName,
                     Role = "user",
                     Age = model.Age,
                     Info = model.Info
@@ -102,6 +101,11 @@ namespace SocialNetwork.Controllers
             return View(model);
         }
 
+        public async Task<ActionResult> SetData()
+        {
+            await SetInitialDataAsync();
+            return RedirectToAction("Login");
+        }
         private async Task SetInitialDataAsync()
         {
             List<UserDTO> users = new List<UserDTO>
@@ -109,9 +113,8 @@ namespace SocialNetwork.Controllers
                 new UserDTO
                 {
                     Email = "test@mail.ru",
-                    UserName = "test@mail.ru",
+                    UserName = "Admin",
                     Password = "test666",
-                    Name = "Test Admin",
                     Address = "ул. Пушкина, д.47, кв.47",
                     Role = "admin",
                     Age = 15,
@@ -120,9 +123,8 @@ namespace SocialNetwork.Controllers
                 new UserDTO
                 {
                     Email = "aboba@mail.ru",
-                    UserName = "aboba@mail.ru",
+                    UserName = "User",
                     Password = "aboba666",
-                    Name = "Test User",
                     Address = "Samara",
                     Role = "user",
                     Age = 54,

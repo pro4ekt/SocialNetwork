@@ -10,7 +10,6 @@ namespace BLL.DTO
         public string UserName { get; set; }
         public int Age { get; set; }
         public string Info { get; set; }
-        public string Name { get; set; }
         public string Address { get; set; }
         public string Role { get; set; }
         public List<FriendsDTO> Friends { get; set; }

@@ -79,6 +79,10 @@
     <Compile Include="Migrations\202112271229019_Friends.designer.cs">
       <DependentUpon>202112271229019_Friends.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112281440121_UserName.cs" />
+    <Compile Include="Migrations\202112281440121_UserName.designer.cs">
+      <DependentUpon>202112281440121_UserName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ClientManager.cs" />
@@ -105,6 +109,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112271229019_Friends.resx">
       <DependentUpon>202112271229019_Friends.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112281440121_UserName.resx">
+      <DependentUpon>202112281440121_UserName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

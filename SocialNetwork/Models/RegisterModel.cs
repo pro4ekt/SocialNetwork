@@ -19,7 +19,7 @@ namespace SocialNetwork.Models
         public string ConfirmPassword { get; set; }
         [Required]
         public string Address { get; set; }
-        public string Name { get; set; }
+        public string UserName { get; set; }
         [Required]
         public string Info { get; set; }
         [Required]

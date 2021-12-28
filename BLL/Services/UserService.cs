@@ -26,14 +26,14 @@ namespace BLL.Services
             ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
             if (user == null)
             {
-                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.Email };
+                user = new ApplicationUser { Email = userDto.Email, UserName = userDto.UserName };
                 var result = Database.UserManager.Create(user, userDto.Password);
                 if (result.Errors.Count() > 0)
                     return new OperationDetails(false, result.Errors.FirstOrDefault(), "");
                 // добавляем роль
                 await Database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
                 // создаем профиль клиента
-                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Name = userDto.Name, Age = userDto.Age, Info = userDto.Info};
+                ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Age = userDto.Age, Info = userDto.Info};
                 Database.ClientManager.Create(clientProfile);
                 await Database.SaveAsync();
                 return new OperationDetails(true, "Регистрация успешно пройдена", "");
@@ -48,7 +48,7 @@ namespace BLL.Services
         {
             ClaimsIdentity claim = null;
             // находим пользователя
-            ApplicationUser user = await Database.UserManager.FindAsync(userDto.Email, userDto.Password);
+            ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
             // авторизуем его и возвращаем объект ClaimsIdentity
             if (user != null)
                 claim = await Database.UserManager.CreateIdentityAsync(user,
@@ -66,7 +66,6 @@ namespace BLL.Services
                 userDto.Address = user.ClientProfile.Address;
                 userDto.Age = user.ClientProfile.Age;
                 userDto.UserName = user.UserName;
-                userDto.Name = user.ClientProfile.Name;
                 userDto.Id = user.Id;
                 userDto.Email = user.Email;
                 foreach (var f in user.ClientProfile.Friends)
@@ -87,7 +86,6 @@ namespace BLL.Services
                 userDto.Address = user.ClientProfile.Address;
                 userDto.Age = user.ClientProfile.Age;
                 userDto.UserName = user.UserName;
-                userDto.Name = user.ClientProfile.Name;
                 userDto.Email = user.Email;
                 userDto.Id = user.Id;
                 foreach (var f in user.ClientProfile.Friends)
@@ -106,9 +104,8 @@ namespace BLL.Services
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Address = address;
                 Database.UserManager.FindByIdAsync(id).Result.Email = email;
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
-                Database.UserManager.FindByIdAsync(id).Result.UserName = email;
+                Database.UserManager.FindByIdAsync(id).Result.UserName = name;
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
-                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Name = name;
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Info = info;
                 await Database.SaveAsync();
                 return true;

@@ -10,13 +10,6 @@ namespace SocialNetwork
 {
     public class ChatHub : Hub
     {
-        public override System.Threading.Tasks.Task OnConnected()
-        {
-            string s = Context.User.Identity.Name;
-            var a = Clients.All.user(Context.User.Identity.Name);
-            return base.OnConnected();
-        }
-
         public void Send(string message)
         {
             Clients.Caller.message("You~You: " + message);

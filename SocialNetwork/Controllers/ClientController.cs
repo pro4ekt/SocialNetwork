@@ -69,7 +69,7 @@ namespace SocialNetwork.Controllers
         public async Task<ActionResult> EditUserProfile(UserDTO model)
         {
             HttpCookie cookie = Request.Cookies["user"];
-            bool b = await UserService.EditProfile(cookie.Value,model.Name,model.Email,model.Info,model.Address,model.Age);
+            bool b = await UserService.EditProfile(cookie.Value,model.UserName,model.Email,model.Info,model.Address,model.Age);
             return View("Home");
         }
 
