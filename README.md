@@ -5,3 +5,4 @@ Password : test666
 Test User 
 Email : aboba@mail.ru
 Password : aboba666
+Для того чтобы проинициализировать базу данных нужно нажать на Social Network
