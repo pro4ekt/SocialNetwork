@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNet.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
-using Microsoft.AspNet.SignalR.Hosting;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 
 namespace SocialNetwork
 {
-    public class ChatHub : Hub
+    [HubName("all")]
+    public class AllHub : Hub
     {
-        public void Send(string message)
+        public void Send(string name, string message)
         {
-            Clients.Caller.message("You~You: " + message);
-            Clients.Others.message("others~" + Context.User.Identity.Name + ": " + message);
+            Clients.All.addNewMessageToPage(name, message);
         }
     }
 }

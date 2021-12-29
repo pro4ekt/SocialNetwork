@@ -73,12 +73,6 @@ namespace SocialNetwork.Controllers
             return View("Home");
         }
 
-        public ActionResult Chat()
-        {
-            return View();
-        }
-
-
         public async Task<ActionResult> AddFriend(string friendId)
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -109,6 +103,13 @@ namespace SocialNetwork.Controllers
                 users.Add(await UserService.FindById(f.FriendId));
             }
             return View(users);
+        }
+        public async Task<ActionResult> Chat()
+        {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserDTO u1 = await UserService.FindById(cookie.Value);
+            ViewBag.UserName = u1.UserName;
+            return View();
         }
     }
 }
