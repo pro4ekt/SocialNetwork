@@ -25,6 +25,8 @@
         </dd>
     </dl>
     @Html.ActionLink("Удалить из друзей", "RemoveFriend", "Client", new { friendId = f.Id }, null)
+    <br />
+    @Html.ActionLink("Чат", "Chat", "Client", new { friendId = f.Id }, null)
     <hr>
 }
 

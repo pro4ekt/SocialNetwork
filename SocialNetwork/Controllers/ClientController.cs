@@ -104,11 +104,11 @@ namespace SocialNetwork.Controllers
             }
             return View(users);
         }
-        public async Task<ActionResult> Chat()
+        public async Task<ActionResult> Chat(string friendId)
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO u1 = await UserService.FindById(cookie.Value);
-            ViewBag.UserName = u1.UserName;
+            ViewBag.FriendId = friendId;
             return View();
         }
     }
