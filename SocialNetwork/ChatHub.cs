@@ -23,13 +23,18 @@ namespace SocialNetwork
 
         public void Send(string name ,string message)
         {
-            KeyValuePair<string, string> receiver = clients.FirstOrDefault(k => k.Value == name);
-            if(receiver.Equals(default(KeyValuePair<string, string>)))
-                Clients.Caller.addNewMessageToPage("Server", "Собеседник не в сети");
+            if(name == "")
+                Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
             else
             {
-                Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, message);
-                Clients.Caller.addNewMessageToPage(Context.User.Identity.Name, message);
+                KeyValuePair<string, string> receiver = clients.FirstOrDefault(k => k.Value == name);
+                if (receiver.Equals(default(KeyValuePair<string, string>)))
+                    Clients.Caller.addNewMessageToPage("Server", "Собеседник не в сети");
+                else
+                {
+                    Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, message);
+                    Clients.Caller.addNewMessageToPage(Context.User.Identity.Name, message);
+                }
             }
         }
 

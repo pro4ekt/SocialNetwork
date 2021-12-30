@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
     <table>
         <tr>
-            <td><p>Введите Email пользователя которого хотите найти</p></td>
+            <td><p>Users Email</p></td>
             <td><input type="text" name="userToFind" /> </td>
         </tr>
         <tr>
@@ -62,7 +62,7 @@
             @Html.DisplayFor(model => model.Info)
         </dd>
     </dl>
-    @Html.ActionLink("Добавить в друзья", "AddFriend", "Client",new { friendId = Model.Id},null)
+    @Html.ActionLink("Add to friends", "AddFriend", "Client",new { friendId = Model.Id},null)
     <hr />
 }
 @if (Model == null)
