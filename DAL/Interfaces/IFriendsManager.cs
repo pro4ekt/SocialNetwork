@@ -11,5 +11,6 @@ namespace DAL.Interfaces
     { 
         void Create(Friends item);
         void Remove(Friends item);
+        List<Friends> GetAll();
     }
 }

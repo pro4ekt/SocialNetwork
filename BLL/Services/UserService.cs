@@ -52,6 +52,12 @@ namespace BLL.Services
             ClientProfile clientProfile = user.ClientProfile;
             Database.ClientManager.Remove(clientProfile);
             Database.UserManager.Delete(user);
+            var allFriendships = Database.FriendsManager.GetAll();
+            var friendshipsToRemove = allFriendships.Where(f=>(f.Id == user.Id || f.FriendId == user.Id));
+            foreach (var f in friendshipsToRemove)
+            {
+                Database.FriendsManager.Remove(f);
+            }
             await Database.SaveAsync();
             return true;
         }

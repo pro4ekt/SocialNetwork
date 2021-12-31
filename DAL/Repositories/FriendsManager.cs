@@ -37,6 +37,11 @@ namespace DAL.Repositories
             Database.Friends.RemoveRange(Database.Friends.Where(f => (f.Id == item.FriendId && f.FriendId == item.Id)));
             Database.SaveChanges();
         }
+
+        public List<Friends> GetAll()
+        {
+            return Database.Friends.ToList();
+        }
         public void Dispose()
         {
             Database.Dispose();
