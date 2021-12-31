@@ -61,8 +61,22 @@
         <dd>
             @Html.DisplayFor(model => model.Info)
         </dd>
+        @if(User.IsInRole("admin"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Role)
+            </dt>
+            <dd>
+                 @Html.DisplayFor(model => model.Role)
+            </dd>
+        }
     </dl>
     @Html.ActionLink("Add to friends", "AddFriend", "Client",new { friendId = Model.Id},null)
+    if(User.IsInRole("admin") && Model.Role != "admin")
+    {
+        <br/>
+        @Html.ActionLink("Delete User","RemoveUser","Client", new {userId = Model.Id} , null)
+    }
     <hr />
 }
 @if (Model == null)

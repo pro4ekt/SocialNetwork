@@ -24,6 +24,12 @@ namespace DAL.Repositories
             return await Database.ClientProfiles.FindAsync(id);
         }
 
+        public void Remove(ClientProfile item)
+        {
+            Database.ClientProfiles.Remove(item);
+            Database.SaveChanges();
+        }
+
         public void Dispose()
         {
             Database.Dispose();

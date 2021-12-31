@@ -8,5 +8,6 @@ namespace DAL.Interfaces
     {
         void Create(ClientProfile item);
         Task<ClientProfile> Find(string id);
+        void Remove(ClientProfile item);
     }
 }

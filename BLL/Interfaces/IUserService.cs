@@ -11,6 +11,7 @@ namespace BLL.Interfaces
     public interface IUserService : IDisposable
     {
         Task<OperationDetails> Create(UserDTO userDto);
+        Task<bool> RemoveUser(string id);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task<UserDTO> FindByEmail(string email);
         Task<UserDTO> FindById(string id);

@@ -44,6 +44,18 @@ namespace BLL.Services
             }
         }
 
+        public async Task<bool> RemoveUser(string id)
+        {
+            ApplicationUser user = await Database.UserManager.FindByIdAsync(id);
+            if (user == null)
+                return false;
+            ClientProfile clientProfile = user.ClientProfile;
+            Database.ClientManager.Remove(clientProfile);
+            Database.UserManager.Delete(user);
+            await Database.SaveAsync();
+            return true;
+        }
+
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
             ClaimsIdentity claim = null;
@@ -62,12 +74,18 @@ namespace BLL.Services
             UserDTO userDto = new UserDTO();
             if (user != null)
             {
+                List<string> a = new List<string>();
+                foreach (var r in user.Roles.ToList())
+                {
+                    a.Add(r.RoleId);
+                }
                 userDto.Info = user.ClientProfile.Info;
                 userDto.Address = user.ClientProfile.Address;
                 userDto.Age = user.ClientProfile.Age;
                 userDto.UserName = user.UserName;
                 userDto.Id = user.Id;
                 userDto.Email = user.Email;
+                userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
                 foreach (var f in user.ClientProfile.Friends)
                 {
                     userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
@@ -82,12 +100,18 @@ namespace BLL.Services
             UserDTO userDto = new UserDTO();
             if (user != null)
             {
+                List<string> a = new List<string>();
+                foreach (var r in user.Roles.ToList())
+                {
+                    a.Add(r.RoleId);
+                }
                 userDto.Info = user.ClientProfile.Info;
                 userDto.Address = user.ClientProfile.Address;
                 userDto.Age = user.ClientProfile.Age;
                 userDto.UserName = user.UserName;
                 userDto.Email = user.Email;
                 userDto.Id = user.Id;
+                userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
                 foreach (var f in user.ClientProfile.Friends)
                 {
                     userDto.Friends.Add(new FriendsDTO{Id = f.Id, FriendId = f.FriendId});
