@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 using BLL.DTO;
 using BLL.Infrastructure;
 using BLL.Interfaces;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SocialNetwork.Models;
@@ -40,29 +42,44 @@ namespace SocialNetwork.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                UserDTO userDto = new UserDTO { Email = model.Email, Password = model.Password };
-                ClaimsIdentity claim = await UserService.Authenticate(userDto);
-                if (claim == null)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError("", "Неверный логин или пароль.");
-                }
-                else
-                {
-                    AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    UserDTO userDto = await UserService.FindByEmail(model.Email);
+                    ClaimsIdentity claim = await UserService.Authenticate(userDto);
+                    if (claim == null)
                     {
-                        IsPersistent = true
-                    }, claim);
-                    UserDTO u =  await UserService.FindByEmail(userDto.Email);
-                    HttpCookie cookie = new HttpCookie("user", u.Id);
-                    cookie.Expires = DateTime.Now.AddMinutes(20);
-                    Response.Cookies.Add(cookie);
-                    return RedirectToAction("Profile", "Client");
+                        ModelState.AddModelError("", "Неверный логин или пароль.");
+                    }
+                    else
+                    {
+                        if (await UserService.CheckPassword(model.Email, model.Password))
+                        {
+                            AuthenticationManager.SignOut();
+                            AuthenticationManager.SignIn(new AuthenticationProperties
+                            {
+                                IsPersistent = true
+                            }, claim);
+                            UserDTO u = await UserService.FindByEmail(userDto.Email);
+                            HttpCookie cookie = new HttpCookie("user", u.Id);
+                            cookie.Expires = DateTime.Now.AddMinutes(20);
+                            Response.Cookies.Add(cookie);
+                            return RedirectToAction("Profile", "Client");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Неверный логин или пароль.");
+                        }
+                    }
                 }
+                return View(model);
             }
-            return View(model);
+            catch
+            {
+                ModelState.AddModelError("", "Такого пользователя нет.");
+                return View(model);
+            }
         }
 
         public ActionResult Logout()

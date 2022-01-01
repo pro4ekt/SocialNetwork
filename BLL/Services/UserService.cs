@@ -91,6 +91,7 @@ namespace BLL.Services
                 userDto.UserName = user.UserName;
                 userDto.Id = user.Id;
                 userDto.Email = user.Email;
+                userDto.Password = user.PasswordHash;
                 userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
                 foreach (var f in user.ClientProfile.Friends)
                 {
@@ -117,6 +118,7 @@ namespace BLL.Services
                 userDto.UserName = user.UserName;
                 userDto.Email = user.Email;
                 userDto.Id = user.Id;
+                userDto.Password = user.PasswordHash;
                 userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
                 foreach (var f in user.ClientProfile.Friends)
                 {
@@ -187,6 +189,18 @@ namespace BLL.Services
             {
                 return false;
             }
+        }
+
+        public async Task<bool> CheckPassword(string email, string password)
+        {
+            PasswordHasher hasher = new PasswordHasher();
+            ApplicationUser user = await Database.UserManager.FindByEmailAsync(email);
+            if (hasher.VerifyHashedPassword(user.PasswordHash, password)
+                != PasswordVerificationResult.Failed)
+            {
+                return true;
+            }
+            return false;
         }
 
         // начальная инициализация бд
