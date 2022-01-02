@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
     <table>
         <tr>
-            <td><p>Users Email</p></td>
+            <td><p>Email/Name</p></td>
             <td><input type="text" name="userToFind" /> </td>
         </tr>
         <tr>
@@ -19,68 +19,5 @@
         </tr>
     </table>
 }
-@if (@Model != null && @Model.Email != null)
-{
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Info)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Info)
-        </dd>
-        @if(User.IsInRole("admin"))
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.Role)
-            </dt>
-            <dd>
-                 @Html.DisplayFor(model => model.Role)
-            </dd>
-        }
-    </dl>
-    @Html.ActionLink("Add to friends", "AddFriend", "Client",new { friendId = Model.Id},null)
-    if(User.IsInRole("admin") && Model.Role != "admin")
-    {
-        <br/>
-        @Html.ActionLink("Delete User","RemoveUser","Client", new {userId = Model.Id} , null)
-    }
-    <hr />
-}
-@if (Model == null)
-{
-    <p>There is no user like this</p>
-}
+@Html.Partial("FindUserResult")
 

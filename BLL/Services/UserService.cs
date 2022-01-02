@@ -129,6 +129,36 @@ namespace BLL.Services
             return null;
         }
 
+        public async Task<UserDTO> FindByName(string userName)
+        {
+            ApplicationUser user = await Database.UserManager.FindByNameAsync(userName);
+            UserDTO userDto = new UserDTO();
+            if (user != null)
+            {
+                List<string> a = new List<string>();
+                foreach (var r in user.Roles.ToList())
+                {
+                    a.Add(r.RoleId);
+                }
+
+                userDto.Info = user.ClientProfile.Info;
+                userDto.Address = user.ClientProfile.Address;
+                userDto.Age = user.ClientProfile.Age;
+                userDto.UserName = user.UserName;
+                userDto.Id = user.Id;
+                userDto.Email = user.Email;
+                userDto.Password = user.PasswordHash;
+                userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
+                foreach (var f in user.ClientProfile.Friends)
+                {
+                    userDto.Friends.Add(new FriendsDTO {Id = f.Id, FriendId = f.FriendId});
+                }
+
+                return userDto;
+            }
+            return null;
+        }
+
         public async Task<bool> EditProfile(string id,string name, string email, string info, string address,int age)
         {
             try

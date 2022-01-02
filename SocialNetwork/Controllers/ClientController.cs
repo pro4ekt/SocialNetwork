@@ -57,8 +57,16 @@ namespace SocialNetwork.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> FindUser(string userToFind)
         {
-            UserDTO u = await UserService.FindByEmail(userToFind);
-            return RedirectToAction("FindUser", u);
+            if (userToFind.ToLower().Contains("@"))
+            {
+                UserDTO u = await UserService.FindByEmail(userToFind);
+                return RedirectToAction("FindUser", u);
+            }
+            else
+            {
+                UserDTO u = await UserService.FindByName(userToFind);
+                return RedirectToAction("FindUser", u);
+            }
         }
 
         [Authorize]

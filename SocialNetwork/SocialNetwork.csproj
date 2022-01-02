@@ -220,6 +220,7 @@
     <Content Include="Views\Client\Home.cshtml" />
     <Content Include="Views\Client\Chat.cshtml" />
     <Content Include="Views\Client\YourFriends.cshtml" />
+    <Content Include="Views\Client\FindUserResult.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
