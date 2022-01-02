@@ -84,6 +84,10 @@ namespace SocialNetwork.Controllers
         {
             HttpCookie cookie = Request.Cookies["user"];
             bool b = await UserService.EditProfile(cookie.Value,model.UserName,model.Email,model.Info,model.Address,model.Age);
+            if (b == false)
+            {
+                return RedirectToAction("EditUserProfile");
+            }
             return View("Home");
         }
 

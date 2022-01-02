@@ -163,6 +163,8 @@ namespace BLL.Services
         {
             try
             {
+                if (Database.UserManager.FindByEmailAsync(email) != null)
+                    throw new Exception();
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Address = address;
                 Database.UserManager.FindByIdAsync(id).Result.Email = email;
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
