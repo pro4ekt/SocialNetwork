@@ -56,6 +56,10 @@ namespace SocialNetwork.Controllers
                     {
                         if (await UserService.CheckPassword(model.Email, model.Password))
                         {
+                            if (userDto.Banned)
+                            {
+                                return View("BAN");
+                            }
                             AuthenticationManager.SignOut();
                             AuthenticationManager.SignIn(new AuthenticationProperties
                             {

@@ -33,8 +33,15 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
-        public ActionResult Home()
+        public async Task<ActionResult> Home()
         {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserDTO u1 = await UserService.FindById(cookie.Value);
+            if (u1.Banned)
+            {
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
 
@@ -43,12 +50,24 @@ namespace SocialNetwork.Controllers
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO u = await UserService.FindById(cookie.Value);
+            if (u.Banned)
+            {
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Login", "Account");
+            }
             return View(u);
         }
 
         [Authorize]
-        public ActionResult FindUser(UserDTO u)
+        public async Task<ActionResult> FindUser(UserDTO u)
         {
+            HttpCookie cookie = Request.Cookies["user"];
+            UserDTO u1 = await UserService.FindById(cookie.Value);
+            if (u1.Banned)
+            {
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Login", "Account");
+            }
             return View(u);
         }
 
@@ -118,6 +137,11 @@ namespace SocialNetwork.Controllers
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO  u1 = await UserService.FindById(cookie.Value);
+            if (u1.Banned)
+            {
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Login", "Account");
+            }
             List<UserDTO> users = new List<UserDTO>();
             foreach (var f in u1.Friends)
             {
@@ -131,6 +155,11 @@ namespace SocialNetwork.Controllers
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO u1 = await UserService.FindById(cookie.Value);
+            if (u1.Banned)
+            {
+                AuthenticationManager.SignOut();
+                return RedirectToAction("Login","Account");
+            }
             ViewBag.FriendId = friendId;
             return View();
         }
