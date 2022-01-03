@@ -12,6 +12,8 @@ namespace BLL.Interfaces
     {
         Task<OperationDetails> Create(UserDTO userDto);
         Task<bool> RemoveUser(string id);
+        Task<bool> BanUser(string id);
+        Task<bool> UnBanUser(string id);
         Task<ClaimsIdentity> Authenticate(UserDTO userDto);
         Task<UserDTO> FindByEmail(string email);
         Task<UserDTO> FindById(string id);

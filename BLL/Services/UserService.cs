@@ -62,6 +62,30 @@ namespace BLL.Services
             return true;
         }
 
+        public async Task<bool> BanUser(string id)
+        {
+            ApplicationUser user = await Database.UserManager.FindByIdAsync(id);
+            UserDTO userDto = await FindById(id);
+            if (user.ClientProfile.Banned == true)
+                return false;
+            user.ClientProfile.Banned = true;
+            userDto.Banned = true;
+            await Database.SaveAsync();
+            return true;
+        }
+
+        public async Task<bool> UnBanUser(string id)
+        {
+            ApplicationUser user = await Database.UserManager.FindByIdAsync(id);
+            UserDTO userDto = await FindById(id);
+            if (user.ClientProfile.Banned == false)
+                return false;
+            user.ClientProfile.Banned = false;
+            userDto.Banned = false;
+            await Database.SaveAsync();
+            return true;
+        }
+
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
             ClaimsIdentity claim = null;
@@ -93,6 +117,7 @@ namespace BLL.Services
                 userDto.Email = user.Email;
                 userDto.Password = user.PasswordHash;
                 userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
+                userDto.Banned = user.ClientProfile.Banned;
                 foreach (var f in user.ClientProfile.Friends)
                 {
                     userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
@@ -120,6 +145,7 @@ namespace BLL.Services
                 userDto.Id = user.Id;
                 userDto.Password = user.PasswordHash;
                 userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
+                userDto.Banned = user.ClientProfile.Banned;
                 foreach (var f in user.ClientProfile.Friends)
                 {
                     userDto.Friends.Add(new FriendsDTO{Id = f.Id, FriendId = f.FriendId});
@@ -149,6 +175,7 @@ namespace BLL.Services
                 userDto.Email = user.Email;
                 userDto.Password = user.PasswordHash;
                 userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
+                userDto.Banned = user.ClientProfile.Banned;
                 foreach (var f in user.ClientProfile.Friends)
                 {
                     userDto.Friends.Add(new FriendsDTO {Id = f.Id, FriendId = f.FriendId});

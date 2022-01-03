@@ -107,7 +107,8 @@ namespace SocialNetwork.Controllers
                     UserName = model.UserName,
                     Role = "user",
                     Age = model.Age,
-                    Info = model.Info
+                    Info = model.Info,
+                    Banned = false
                 };
                 OperationDetails operationDetails = await UserService.Create(userDto);
                 if (operationDetails.Succedeed)

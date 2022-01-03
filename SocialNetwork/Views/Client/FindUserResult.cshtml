@@ -1,61 +1,72 @@
 ﻿@model BLL.DTO.UserDTO
 @if (@Model != null && @Model.Email != null)
 {
-    <dl class="dl-horizontal">
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.UserName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.UserName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Age)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Age)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Address)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Address)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Info)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Info)
+    </dd>
+    @if (User.IsInRole("admin"))
+    {
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
+            @Html.DisplayNameFor(model => model.Role)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.UserName)
+            @Html.DisplayFor(model => model.Role)
         </dd>
-
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Banned)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Email)
+            @Model.Banned
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Info)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Info)
-        </dd>
-        @if (User.IsInRole("admin"))
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.Role)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Role)
-            </dd>
-        }
-    </dl>
+    }
+</dl>
     @Html.ActionLink("Add to friends", "AddFriend", "Client", new { friendId = Model.Id }, null)
-    if (User.IsInRole("admin") && Model.Role != "admin")
+    if (User.IsInRole("admin") && Model.Role != "admin" && Model.Banned == false)
     {
         <br />
-        @Html.ActionLink("Delete User", "RemoveUser", "Client", new { userId = Model.Id }, null)
+        @Html.ActionLink("Ban User", "BanUser", "Client", new { userId = Model.Id }, null)
+    }
+    if (User.IsInRole("admin") && Model.Role != "admin" && Model.Banned == true)
+    {
+        <br />
+        @Html.ActionLink("Unban User", "UnBanUser", "Client", new { userId = Model.Id }, null)
     }
     <hr />
 }

@@ -136,9 +136,15 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        public async Task<ActionResult> RemoveUser(string userId)
+        public async Task<ActionResult> BanUser(string userId)
         {
-            await UserService.RemoveUser(userId);
+            await UserService.BanUser(userId);
+            return RedirectToAction("Home");
+        }
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> UnBanUser(string userId)
+        {
+            await UserService.UnBanUser(userId);
             return RedirectToAction("Home");
         }
     }
