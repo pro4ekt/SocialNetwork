@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BLL.DTO
 {
+    /// <summary>
+    /// DTO (Data Transfer Object) по сути нужен чтобы передавать данные из DAL в PL
+    /// </summary>
     public class FriendsDTO
     {
         public string Id { get; set; }

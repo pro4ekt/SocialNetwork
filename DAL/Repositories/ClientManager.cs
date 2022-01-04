@@ -5,6 +5,9 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
+    /// <summary>
+    /// Менеджер клиентов(по сути выполняет роль репозитория для клиентов)
+    /// </summary>
     public class ClientManager : IClientManager
     {
         public ApplicationContext Database { get; set; }

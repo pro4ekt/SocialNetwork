@@ -2,6 +2,9 @@
 
 namespace BLL.DTO
 {
+    /// <summary>
+    /// DTO (Data Transfer Object) по сути нужен чтобы передавать данные из DAL в PL
+    /// </summary>
     public class UserDTO
     {
         public string Id { get; set; }

@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Entities
 {
+    /// <summary>
+    /// Часть профиля пользователя в которой хранится информация про него (таблица формирует свезять один ко многим с Friends)
+    /// </summary>
     public class ClientProfile
     {
         [Key]

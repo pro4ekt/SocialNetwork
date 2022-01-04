@@ -7,6 +7,9 @@ using DAL.Interfaces;
 
 namespace DAL.Repositories
 {
+    /// <summary>
+    /// Менеджер дружбы(по сути выполняет роль репозитория для дружб)
+    /// </summary>
     public class FriendsManager : IFriendsManager
     {
         public ApplicationContext Database { get; set; }

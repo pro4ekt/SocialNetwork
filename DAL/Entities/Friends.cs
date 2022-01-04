@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DAL.Entities
 {
+    /// <summary>
+    /// Таблицы "Дружбы" в которой идёт свзять пользователь - друг(другой пользователь)
+    /// </summary>
     public class Friends
     {
         [Key,Column(Order = 0), ForeignKey("ClientProfile")]
