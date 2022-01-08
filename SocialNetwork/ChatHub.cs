@@ -29,7 +29,7 @@ namespace SocialNetwork
             {
                 KeyValuePair<string, string> receiver = clients.FirstOrDefault(k => k.Value == name);
                 if (receiver.Equals(default(KeyValuePair<string, string>)))
-                    Clients.Caller.addNewMessageToPage("Server", "Собеседник не в сети");
+                    Clients.Caller.addNewMessageToPage("Server", "User offline");
                 else
                 {
                     Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, message);

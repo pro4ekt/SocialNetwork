@@ -19,10 +19,12 @@ namespace DAL.Entities
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual List<Friends> Friends { get; set; }
+        public virtual List<Messages> Messages { get; set; }
 
         public ClientProfile()
         {
             Friends = new List<Friends>();
+            Messages = new List<Messages>();
         }
     }
 }

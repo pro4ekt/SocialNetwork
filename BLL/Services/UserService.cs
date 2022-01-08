@@ -36,11 +36,11 @@ namespace BLL.Services
                 ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Age = userDto.Age, Info = userDto.Info};
                 Database.ClientManager.Create(clientProfile);
                 await Database.SaveAsync();
-                return new OperationDetails(true, "Регистрация успешно пройдена", "");
+                return new OperationDetails(true, "Register succesfull", "");
             }
             else
             {
-                return new OperationDetails(false, "Пользователь с таким логином уже существует", "Email");
+                return new OperationDetails(false, "User with this login already exists", "Email");
             }
         }
 

@@ -50,7 +50,7 @@ namespace SocialNetwork.Controllers
                     ClaimsIdentity claim = await UserService.Authenticate(userDto);
                     if (claim == null)
                     {
-                        ModelState.AddModelError("", "Неверный логин или пароль.");
+                        ModelState.AddModelError("", "Wrong login or password");
                     }
                     else
                     {
@@ -73,7 +73,7 @@ namespace SocialNetwork.Controllers
                         }
                         else
                         {
-                            ModelState.AddModelError("", "Неверный логин или пароль.");
+                            ModelState.AddModelError("", "Wrong login or password");
                         }
                     }
                 }
@@ -81,7 +81,7 @@ namespace SocialNetwork.Controllers
             }
             catch
             {
-                ModelState.AddModelError("", "Такого пользователя нет.");
+                ModelState.AddModelError("", "User was not found");
                 return View(model);
             }
         }
