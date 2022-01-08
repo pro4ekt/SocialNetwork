@@ -89,9 +89,13 @@
     <Compile Include="Migrations\202201031508477_BanProperty.designer.cs">
       <DependentUpon>202201031508477_BanProperty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202201081316396_Messages.cs" />
-    <Compile Include="Migrations\202201081316396_Messages.designer.cs">
-      <DependentUpon>202201081316396_Messages.cs</DependentUpon>
+    <Compile Include="Migrations\202201082128538_Messages.cs" />
+    <Compile Include="Migrations\202201082128538_Messages.designer.cs">
+      <DependentUpon>202201082128538_Messages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201082136540_MessageUpdate.cs" />
+    <Compile Include="Migrations\202201082136540_MessageUpdate.designer.cs">
+      <DependentUpon>202201082136540_MessageUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,8 +131,11 @@
     <EmbeddedResource Include="Migrations\202201031508477_BanProperty.resx">
       <DependentUpon>202201031508477_BanProperty.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202201081316396_Messages.resx">
-      <DependentUpon>202201081316396_Messages.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201082128538_Messages.resx">
+      <DependentUpon>202201082128538_Messages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201082136540_MessageUpdate.resx">
+      <DependentUpon>202201082136540_MessageUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

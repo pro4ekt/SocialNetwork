@@ -124,7 +124,7 @@ namespace BLL.Services
                 }
                 foreach (var m in user.ClientProfile.Messages)
                 {
-                    userDto.Messages.Add(new MessagesDTO {Id = m.Id, SenderId = m.SenderId, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime});
+                    userDto.Messages.Add(new MessagesDTO {Id = m.Id, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime});
                 }
                 return userDto;
             }
@@ -156,7 +156,7 @@ namespace BLL.Services
                 }
                 foreach (var m in user.ClientProfile.Messages)
                 {
-                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, SenderId = m.SenderId, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
+                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }
@@ -189,7 +189,7 @@ namespace BLL.Services
                 }
                 foreach (var m in user.ClientProfile.Messages)
                 {
-                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, SenderId = m.SenderId, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
+                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }
@@ -280,7 +280,6 @@ namespace BLL.Services
             Messages message = new Messages
             {
                 Id = messageDto.Id,
-                SenderId = messageDto.SenderId,
                 ReceiverId = messageDto.ReceiverId,
                 DateTime = messageDto.DateTime,
                 Text = messageDto.Text,
@@ -315,7 +314,7 @@ namespace BLL.Services
 
         public void Dispose()
         {
-            Database.Dispose();
+            //ПРИДУМАТЬ ШОТО С ДИСПОЗОМ
         }
     }
 }

@@ -12,21 +12,20 @@
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        SenderId = c.String(maxLength: 128),
-                        ReceiverId = c.String(),
-                        Text = c.String(),
+                        ReceiverId = c.String(nullable: false, maxLength: 128),
+                        Text = c.String(nullable: false, maxLength: 128),
                         DateTime = c.DateTime(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ClientProfiles", t => t.SenderId)
-                .Index(t => t.SenderId);
+                .PrimaryKey(t => new { t.Id, t.ReceiverId, t.Text })
+                .ForeignKey("dbo.ClientProfiles", t => t.Id, cascadeDelete: true)
+                .Index(t => t.Id);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Messages", "SenderId", "dbo.ClientProfiles");
-            DropIndex("dbo.Messages", new[] { "SenderId" });
+            DropForeignKey("dbo.Messages", "Id", "dbo.ClientProfiles");
+            DropIndex("dbo.Messages", new[] { "Id" });
             DropTable("dbo.Messages");
         }
     }

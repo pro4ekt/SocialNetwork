@@ -36,7 +36,23 @@ namespace SocialNetwork
         {
             if (name == "")
             {
-                Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
+                try
+                {
+                    MessagesDTO messageDTO = new MessagesDTO
+                    {
+                        Id = Context.User.Identity.GetUserId(),
+                        ReceiverId = "All",
+                        DateTime = DateTime.Now,
+                        Text = message
+                    };
+                    await UserService.SaveMessage(messageDTO);
+                    Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
             else
             {
@@ -45,8 +61,25 @@ namespace SocialNetwork
                     Clients.Caller.addNewMessageToPage("Server", "User offline");
                 else
                 {
-                    Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, message);
-                    Clients.Caller.addNewMessageToPage(Context.User.Identity.Name, message);
+                    try
+                    {
+
+                        MessagesDTO messageDTO = new MessagesDTO
+                        {
+                            Id = Context.User.Identity.GetUserId(),
+                            ReceiverId = receiver.Value,
+                            DateTime = DateTime.Now,
+                            Text = message
+                        };
+                        await UserService.SaveMessage(messageDTO);
+                        Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, message);
+                        Clients.Caller.addNewMessageToPage(Context.User.Identity.Name, message);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
                 }
             }
         }

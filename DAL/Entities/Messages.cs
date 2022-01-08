@@ -10,16 +10,14 @@ namespace DAL.Entities
 {
     public class Messages
     {
-        [Key]
+        [Key, Column(Order = 0), ForeignKey("ClientProfile")]
         public string Id { get; set; }
-
-        [ForeignKey("ClientProfile")]
-        public string SenderId { get; set; }
-
-        public string ReceiverId { get; set;}
+        [Key, Column(Order = 1)]
+        public string ReceiverId { get; set; }
+        [Key, Column(Order = 2)]
         public string Text { get; set; }
+        [Key, Column(Order = 3)]
         public DateTime DateTime { get; set; }
-
         public virtual ClientProfile ClientProfile { get; set; }
     }
 }
