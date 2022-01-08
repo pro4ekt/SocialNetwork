@@ -17,11 +17,13 @@ namespace BLL.DTO
         public string Role { get; set; }
         public bool Banned { get; set; }
         public List<FriendsDTO> Friends { get; set; }
+        public List<MessagesDTO> Messages { get; set; }
 
         public UserDTO()
         {
             Banned = false;
             Friends = new List<FriendsDTO>();
+            Messages = new List<MessagesDTO>();
         }
     }
 }

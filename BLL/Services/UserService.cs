@@ -186,18 +186,22 @@ namespace BLL.Services
             return null;
         }
 
-        public async Task<bool> EditProfile(string id,string name, string email, string info, string address,int age)
+        public async Task<bool> EditProfile(string id,string name, string email, string info, string address,int age, UserDTO user)
         {
             try
             {
-                if (Database.UserManager.FindByEmailAsync(email) != null)
+                if (Database.UserManager.FindByEmailAsync(email) != null && user.Email != email)
                     throw new Exception();
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Address = address;
                 Database.UserManager.FindByIdAsync(id).Result.Email = email;
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
                 Database.UserManager.FindByIdAsync(id).Result.UserName = name;
-                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
                 Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Info = info;
+                user.Email = email;
+                user.Info = info;
+                user.Address = address;
+                user.Age = age;
+                user.UserName = name;
                 await Database.SaveAsync();
                 return true;
             }
