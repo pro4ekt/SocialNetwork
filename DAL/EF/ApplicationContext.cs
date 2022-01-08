@@ -17,6 +17,7 @@ namespace DAL.EF
 
         public DbSet<ClientProfile> ClientProfiles { get; set; }
         public DbSet<Friends> Friends { get; set; }
+        public DbSet<Messages> Messages { get; set; }
 
         public ApplicationContext Create()
         {

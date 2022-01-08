@@ -67,6 +67,7 @@
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IFriendsManager.cs" />
+    <Compile Include="Interfaces\IMessageManager.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Migrations\202112212355181_InitialCreate.cs" />
     <Compile Include="Migrations\202112212355181_InitialCreate.designer.cs">
@@ -97,6 +98,7 @@
     <Compile Include="Repositories\ClientManager.cs" />
     <Compile Include="Repositories\FriendsManager.cs" />
     <Compile Include="Repositories\IdentityUnitOfWork.cs" />
+    <Compile Include="Repositories\MessageManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">
