@@ -9,6 +9,7 @@ namespace DAL.Interfaces
         ApplicationUserManager UserManager { get; }
         IClientManager ClientManager { get; }
         IFriendsManager FriendsManager { get; }
+        IMessageManager MessageManager { get; }
         ApplicationRoleManager RoleManager { get; }
         Task SaveAsync();
     }

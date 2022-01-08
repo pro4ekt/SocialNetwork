@@ -122,6 +122,10 @@ namespace BLL.Services
                 {
                     userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
                 }
+                foreach (var m in user.ClientProfile.Messages)
+                {
+                    userDto.Messages.Add(new MessagesDTO {Id = m.Id, SenderId = m.SenderId, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime});
+                }
                 return userDto;
             }
             return null;
@@ -150,11 +154,14 @@ namespace BLL.Services
                 {
                     userDto.Friends.Add(new FriendsDTO{Id = f.Id, FriendId = f.FriendId});
                 }
+                foreach (var m in user.ClientProfile.Messages)
+                {
+                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, SenderId = m.SenderId, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
+                }
                 return userDto;
             }
             return null;
         }
-
         public async Task<UserDTO> FindByName(string userName)
         {
             ApplicationUser user = await Database.UserManager.FindByNameAsync(userName);
@@ -180,7 +187,10 @@ namespace BLL.Services
                 {
                     userDto.Friends.Add(new FriendsDTO {Id = f.Id, FriendId = f.FriendId});
                 }
-
+                foreach (var m in user.ClientProfile.Messages)
+                {
+                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, SenderId = m.SenderId, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
+                }
                 return userDto;
             }
             return null;
@@ -221,10 +231,10 @@ namespace BLL.Services
                 {
                     Id = id,
                     FriendId = friendId,
-                    ClientProfile = await Database.ClientManager.Find(id)
+                    //ClientProfile = await Database.ClientManager.Find(id)
                 };
                 Database.FriendsManager.Create(f1);
-                Database.UserManager.FindByIdAsync(friendId).Result.ClientProfile.Friends.Add(f1);
+                //Database.UserManager.FindByIdAsync(friendId).Result.ClientProfile.Friends.Add(f1);
                 await Database.SaveAsync();
                 return true;
             }
@@ -233,7 +243,6 @@ namespace BLL.Services
                 return false;
             }
         }
-
         public async Task<bool> RemoveFriend(string id, string friendId)
         {
             try
@@ -264,6 +273,25 @@ namespace BLL.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task SaveMessage(MessagesDTO messageDto)
+        {
+            Messages message = new Messages
+            {
+                Id = messageDto.Id,
+                SenderId = messageDto.SenderId,
+                ReceiverId = messageDto.ReceiverId,
+                DateTime = messageDto.DateTime,
+                Text = messageDto.Text,
+            };
+            Database.MessageManager.Create(message);
+            await Database.SaveAsync();
+        }
+
+        public async Task RemoveMessage(string id)
+        {
+
         }
 
         // начальная инициализация бд

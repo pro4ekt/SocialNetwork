@@ -22,6 +22,8 @@ namespace BLL.Interfaces
         Task<bool> AddFriend(string id, string friendId);
         Task<bool> RemoveFriend(string id, string friendId);
         Task<bool> CheckPassword(string email, string password);
+        Task SaveMessage(MessagesDTO messageDto);
+        Task RemoveMessage(string id);
         Task SetInitialData(List<UserDTO> usersDto, List<string> roles);
     }
 }

@@ -16,6 +16,7 @@ namespace DAL.Repositories
         private ApplicationRoleManager roleManager;
         private IClientManager _clientManager;
         private IFriendsManager _friendsManager;
+        private IMessageManager _messageManager;
 
 
         public IdentityUnitOfWork(string connectionString)
@@ -25,6 +26,7 @@ namespace DAL.Repositories
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
             _clientManager = new ClientManager(db);
             _friendsManager = new FriendsManager(db);
+            _messageManager = new MessageManager(db);
         }
 
         public ApplicationUserManager UserManager
@@ -40,6 +42,10 @@ namespace DAL.Repositories
         public IFriendsManager FriendsManager
         {
             get { return _friendsManager; }
+        }
+        public IMessageManager MessageManager
+        {
+            get { return _messageManager; }
         }
 
         public ApplicationRoleManager RoleManager

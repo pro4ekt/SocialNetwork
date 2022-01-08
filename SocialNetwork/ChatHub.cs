@@ -1,10 +1,14 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web;
 using BLL.DTO;
+using BLL.Interfaces;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
@@ -13,6 +17,13 @@ namespace SocialNetwork
     [HubName("chatHub")]
     public class ChatHub : Hub
     {
+        private IUserService UserService
+        {
+            get
+            {
+                return HttpContext.Current.GetOwinContext().GetUserManager<IUserService>();
+            }
+        }
         private static ConcurrentDictionary<string, string> clients = new ConcurrentDictionary<string, string>();
 
         public override Task OnConnected()
@@ -21,10 +32,12 @@ namespace SocialNetwork
             return base.OnConnected();
         }
 
-        public void Send(string name ,string message)
+        public async Task Send(string name ,string message)
         {
-            if(name == "")
+            if (name == "")
+            {
                 Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
+            }
             else
             {
                 KeyValuePair<string, string> receiver = clients.FirstOrDefault(k => k.Value == name);
