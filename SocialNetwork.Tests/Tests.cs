@@ -19,7 +19,7 @@ namespace SocialNetwork.Tests
         [TestMethod]
         public void Test()
         {
-           
+            //Не успел
         }
     }
 }

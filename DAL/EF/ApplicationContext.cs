@@ -21,7 +21,7 @@ namespace DAL.EF
 
         public ApplicationContext Create()
         {
-            throw new System.NotImplementedException();
+            return new ApplicationContext();
         }
     }
 }
