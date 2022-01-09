@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,8 @@ namespace DAL.Repositories
         }
         public void Remove(Messages item)
         {
-            Database.Messages.Remove(item);
+            Database.Messages.Attach(item);
+            Database.Entry(item).State = EntityState.Deleted;
             Database.SaveChanges();
         }
         public async Task<Messages> Find(string id)

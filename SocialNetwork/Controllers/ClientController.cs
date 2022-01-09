@@ -185,6 +185,22 @@ namespace SocialNetwork.Controllers
             }
         }
 
+        [Authorize]
+        public async Task<ActionResult> RemoveMessage(string messageId,string id, string receiverId, string receiverName ,DateTime date, string text)
+        {
+            MessagesDTO message = new MessagesDTO
+            {
+                MessageId = messageId,
+                Id = id,
+                ReceiverId = receiverId,
+                ReceiverName = receiverName,
+                Text = text,
+                DateTime = date
+            };
+            await UserService.RemoveMessage(message);
+            return RedirectToAction("Home");
+        }
+
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> BanUser(string userId)
         {

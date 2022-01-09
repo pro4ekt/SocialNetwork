@@ -40,6 +40,7 @@ namespace SocialNetwork
                 {
                     MessagesDTO messageDTO = new MessagesDTO
                     {
+                        MessageId = RandomString(5),
                         Id = Context.User.Identity.GetUserId(),
                         ReceiverId = "All",
                         ReceiverName = "All",
@@ -67,6 +68,7 @@ namespace SocialNetwork
                         UserDTO u = await UserService.FindById(receiver.Value);
                         MessagesDTO messageDTO = new MessagesDTO
                         {
+                            MessageId = RandomString(6),
                             Id = Context.User.Identity.GetUserId(),
                             ReceiverId = receiver.Value,
                             ReceiverName = u.UserName,
@@ -91,6 +93,14 @@ namespace SocialNetwork
             var userId = Context.User.Identity.GetUserId();
             clients.TryRemove(Context.ConnectionId, out userId);
             return base.OnDisconnected(stopCalled);
+        }
+
+        public static string RandomString(int length)
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

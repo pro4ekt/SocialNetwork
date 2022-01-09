@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -126,9 +127,9 @@ namespace BLL.Services
                 {
                     var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
                     if (u == null)
-                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
                     else
-                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }
@@ -162,9 +163,9 @@ namespace BLL.Services
                 {
                     var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
                     if (u == null)
-                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
                     else
-                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }
@@ -199,9 +200,9 @@ namespace BLL.Services
                 {
                     var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
                     if (u == null)
-                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
                     else
-                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }
@@ -287,22 +288,48 @@ namespace BLL.Services
             return false;
         }
 
-        public async Task SaveMessage(MessagesDTO messageDto)
+        public async Task<bool> SaveMessage(MessagesDTO messageDto)
         {
-            Messages message = new Messages
+            try
             {
-                Id = messageDto.Id,
-                ReceiverId = messageDto.ReceiverId,
-                DateTime = messageDto.DateTime,
-                Text = messageDto.Text,
-            };
-            Database.MessageManager.Create(message);
-            await Database.SaveAsync();
+                Messages message = new Messages
+                {
+                    MessageId = messageDto.MessageId,
+                    Id = messageDto.Id,
+                    ReceiverId = messageDto.ReceiverId,
+                    DateTime = messageDto.DateTime,
+                    Text = messageDto.Text,
+                };
+                Database.MessageManager.Create(message);
+                await Database.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public async Task RemoveMessage(string id)
+        public async Task<bool> RemoveMessage(MessagesDTO messageDto)
         {
-
+            try
+            {
+                Messages message = new Messages
+                {
+                    MessageId = messageDto.MessageId,
+                    Id = messageDto.Id,
+                    ReceiverId = messageDto.ReceiverId,
+                    DateTime = messageDto.DateTime,
+                    Text = messageDto.Text
+                };
+                Database.MessageManager.Remove(message);
+                await Database.SaveAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         // начальная инициализация бд

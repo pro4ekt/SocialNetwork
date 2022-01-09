@@ -8,6 +8,7 @@ namespace BLL.DTO
 {
     public class MessagesDTO
     {
+        public string MessageId { get; set; }
         public string Id { get; set; }
         public string ReceiverId { get; set; }
         public string ReceiverName { get; set; }

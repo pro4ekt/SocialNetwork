@@ -17,7 +17,7 @@
             <b>Text</b>: @m.Text
         </dd>
     </dl>
-    @Html.ActionLink("Delete message", "RemoveFriend", "Client")
+    @Html.ActionLink("Delete message", "RemoveMessage", "Client", new { messageId = m.MessageId, id = m.Id, receiverId = m.ReceiverId, receiverName = m.ReceiverName, date = m.DateTime, text = m.Text },null)
     <hr>
 }
 

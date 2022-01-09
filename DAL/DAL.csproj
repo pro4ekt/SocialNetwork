@@ -97,6 +97,14 @@
     <Compile Include="Migrations\202201082136540_MessageUpdate.designer.cs">
       <DependentUpon>202201082136540_MessageUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201090152338_MessageFix.cs" />
+    <Compile Include="Migrations\202201090152338_MessageFix.designer.cs">
+      <DependentUpon>202201090152338_MessageFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201090155420_MessageFix2.cs" />
+    <Compile Include="Migrations\202201090155420_MessageFix2.designer.cs">
+      <DependentUpon>202201090155420_MessageFix2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ClientManager.cs" />
@@ -136,6 +144,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201082136540_MessageUpdate.resx">
       <DependentUpon>202201082136540_MessageUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201090152338_MessageFix.resx">
+      <DependentUpon>202201090152338_MessageFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201090155420_MessageFix2.resx">
+      <DependentUpon>202201090155420_MessageFix2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
