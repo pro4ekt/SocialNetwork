@@ -42,6 +42,7 @@ namespace SocialNetwork
                     {
                         Id = Context.User.Identity.GetUserId(),
                         ReceiverId = "All",
+                        ReceiverName = "All",
                         DateTime = DateTime.Now,
                         Text = message
                     };
@@ -63,11 +64,12 @@ namespace SocialNetwork
                 {
                     try
                     {
-
+                        UserDTO u = await UserService.FindById(receiver.Value);
                         MessagesDTO messageDTO = new MessagesDTO
                         {
                             Id = Context.User.Identity.GetUserId(),
                             ReceiverId = receiver.Value,
+                            ReceiverName = u.UserName,
                             DateTime = DateTime.Now,
                             Text = message
                         };

@@ -1,0 +1,23 @@
+﻿@model System.Collections.Generic.List<BLL.DTO.MessagesDTO>
+@{
+    ViewBag.Title = "Your Messages";
+    Layout = "_ProfileLayout.cshtml";
+}
+<h2>Messages</h2>
+@foreach (var m in Model)
+{
+    <dl class="dl-horizontal">
+        <dd>
+            <b>Date</b>: @m.DateTime
+        </dd>
+        <dd>
+            <b>Receiver</b>: @m.ReceiverName
+        </dd>
+        <dd>
+            <b>Text</b>: @m.Text
+        </dd>
+    </dl>
+    @Html.ActionLink("Delete message", "RemoveFriend", "Client")
+    <hr>
+}
+

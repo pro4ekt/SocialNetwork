@@ -10,6 +10,7 @@ namespace BLL.DTO
     {
         public string Id { get; set; }
         public string ReceiverId { get; set; }
+        public string ReceiverName { get; set; }
         public string Text { get; set; }
         public DateTime DateTime { get; set; }
     }

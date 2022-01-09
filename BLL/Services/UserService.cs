@@ -124,7 +124,11 @@ namespace BLL.Services
                 }
                 foreach (var m in user.ClientProfile.Messages)
                 {
-                    userDto.Messages.Add(new MessagesDTO {Id = m.Id, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime});
+                    var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
+                    if (u == null)
+                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
+                    else
+                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }
@@ -156,7 +160,11 @@ namespace BLL.Services
                 }
                 foreach (var m in user.ClientProfile.Messages)
                 {
-                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
+                    var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
+                    if (u == null)
+                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
+                    else
+                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }
@@ -189,7 +197,11 @@ namespace BLL.Services
                 }
                 foreach (var m in user.ClientProfile.Messages)
                 {
-                    userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, Text = m.Text, DateTime = m.DateTime });
+                    var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
+                    if (u == null)
+                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
+                    else
+                        userDto.Messages.Add(new MessagesDTO { Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
                 }
                 return userDto;
             }

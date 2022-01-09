@@ -222,6 +222,7 @@
     <Content Include="Views\Client\YourFriends.cshtml" />
     <Content Include="Views\Client\FindUserResult.cshtml" />
     <Content Include="Views\Account\BAN.cshtml" />
+    <Content Include="Views\Client\YourMessages.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

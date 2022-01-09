@@ -164,6 +164,27 @@ namespace SocialNetwork.Controllers
             return View();
         }
 
+        [Authorize]
+        public async Task<ActionResult> YourMessages(string id)
+        {
+            if (id == null)
+            {
+                HttpCookie cookie = Request.Cookies["user"];
+                UserDTO u1 = await UserService.FindById(cookie.Value);
+                if (u1.Banned)
+                {
+                    AuthenticationManager.SignOut();
+                    return RedirectToAction("Login", "Account");
+                }
+                return View(u1.Messages);
+            }
+            else
+            {
+                var l = await UserService.FindById(id);
+                return View(l.Messages);
+            }
+        }
+
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> BanUser(string userId)
         {
