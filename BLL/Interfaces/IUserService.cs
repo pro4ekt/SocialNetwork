@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BLL.DTO;
 using BLL.Infrastructure;
-using DAL.Entities;
 
 namespace BLL.Interfaces
 {

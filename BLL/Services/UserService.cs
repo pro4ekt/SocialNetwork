@@ -15,7 +15,7 @@ namespace BLL.Services
 {
     public class UserService : IUserService
     {
-        IUnitOfWork Database { get; set; }
+        private IUnitOfWork Database { get; set; }
 
         public UserService(IUnitOfWork uow)
         {
@@ -91,11 +91,14 @@ namespace BLL.Services
         {
             ClaimsIdentity claim = null;
             // находим пользователя
-            ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
             // авторизуем его и возвращаем объект ClaimsIdentity
-            if (user != null)
+            if (userDto != null)
+            {
+                ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
                 claim = await Database.UserManager.CreateIdentityAsync(user,
-                                            DefaultAuthenticationTypes.ApplicationCookie);
+                    DefaultAuthenticationTypes.ApplicationCookie);
+                return claim;
+            }
             return claim;
         }
 
@@ -213,20 +216,25 @@ namespace BLL.Services
         {
             try
             {
-                if (Database.UserManager.FindByEmailAsync(email) != null && user.Email != email)
+                ApplicationUser u = await Database.UserManager.FindByEmailAsync(email);
+                if (u != null && user.Email != email)
                     throw new Exception();
-                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Address = address;
-                Database.UserManager.FindByIdAsync(id).Result.Email = email;
-                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Age = age;
-                Database.UserManager.FindByIdAsync(id).Result.UserName = name;
-                Database.UserManager.FindByIdAsync(id).Result.ClientProfile.Info = info;
-                user.Email = email;
-                user.Info = info;
-                user.Address = address;
-                user.Age = age;
-                user.UserName = name;
-                await Database.SaveAsync();
-                return true;
+                else
+                {
+                    ApplicationUser u1 = await Database.UserManager.FindByEmailAsync(user.Email);
+                    u1.Email = email;
+                    u1.ClientProfile.Address = address;
+                    u1.ClientProfile.Age = age;
+                    u1.UserName = name;
+                    u1.ClientProfile.Info = info;
+                    user.Email = email;
+                    user.Info = info;
+                    user.Address = address;
+                    user.Age = age;
+                    user.UserName = name;
+                    await Database.SaveAsync();
+                    return true;
+                }
             }
             catch
             {

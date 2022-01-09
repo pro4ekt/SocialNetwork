@@ -57,7 +57,10 @@
             </dd>
         }
     </dl>
-    @Html.ActionLink("Add to friends", "AddFriend", "Client", new { friendId = Model.Id }, null)
+    if (Model.Email != ViewBag.Email)
+    {
+        @Html.ActionLink("Add to friends", "AddFriend", "Client", new { friendId = Model.Id }, null)
+    }
     if (User.IsInRole("admin") && Model.Role != "admin" && Model.Banned == false)
     {
         <br />

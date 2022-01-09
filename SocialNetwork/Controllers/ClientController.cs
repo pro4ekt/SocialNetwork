@@ -68,6 +68,7 @@ namespace SocialNetwork.Controllers
                 AuthenticationManager.SignOut();
                 return RedirectToAction("Login", "Account");
             }
+            ViewBag.Email = u1.Email;
             return View(u);
         }
 
