@@ -102,42 +102,6 @@ namespace BLL.Services
             return claim;
         }
 
-        public async Task<UserDTO> FindByEmail(string email)
-        {
-            ApplicationUser user = await Database.UserManager.FindByEmailAsync(email);
-            UserDTO userDto = new UserDTO();
-            if (user != null)
-            {
-                List<string> a = new List<string>();
-                foreach (var r in user.Roles.ToList())
-                {
-                    a.Add(r.RoleId);
-                }
-                userDto.Info = user.ClientProfile.Info;
-                userDto.Address = user.ClientProfile.Address;
-                userDto.Age = user.ClientProfile.Age;
-                userDto.UserName = user.UserName;
-                userDto.Id = user.Id;
-                userDto.Email = user.Email;
-                userDto.Password = user.PasswordHash;
-                userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
-                userDto.Banned = user.ClientProfile.Banned;
-                foreach (var f in user.ClientProfile.Friends)
-                {
-                    userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
-                }
-                foreach (var m in user.ClientProfile.Messages)
-                {
-                    var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
-                    if (u == null)
-                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
-                    else
-                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
-                }
-                return userDto;
-            }
-            return null;
-        }
         public async Task<UserDTO> FindById(string id)
         {
             ApplicationUser user = await Database.UserManager.FindByIdAsync(id);
@@ -160,7 +124,7 @@ namespace BLL.Services
                 userDto.Banned = user.ClientProfile.Banned;
                 foreach (var f in user.ClientProfile.Friends)
                 {
-                    userDto.Friends.Add(new FriendsDTO{Id = f.Id, FriendId = f.FriendId});
+                    userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
                 }
                 foreach (var m in user.ClientProfile.Messages)
                 {
@@ -174,41 +138,18 @@ namespace BLL.Services
             }
             return null;
         }
+        public async Task<UserDTO> FindByEmail(string email)
+        {
+            ApplicationUser user = await Database.UserManager.FindByEmailAsync(email);
+            if (user != null)
+                return await FindById(user.Id);
+            return null;
+        }
         public async Task<UserDTO> FindByName(string userName)
         {
             ApplicationUser user = await Database.UserManager.FindByNameAsync(userName);
-            UserDTO userDto = new UserDTO();
             if (user != null)
-            {
-                List<string> a = new List<string>();
-                foreach (var r in user.Roles.ToList())
-                {
-                    a.Add(r.RoleId);
-                }
-
-                userDto.Info = user.ClientProfile.Info;
-                userDto.Address = user.ClientProfile.Address;
-                userDto.Age = user.ClientProfile.Age;
-                userDto.UserName = user.UserName;
-                userDto.Id = user.Id;
-                userDto.Email = user.Email;
-                userDto.Password = user.PasswordHash;
-                userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
-                userDto.Banned = user.ClientProfile.Banned;
-                foreach (var f in user.ClientProfile.Friends)
-                {
-                    userDto.Friends.Add(new FriendsDTO {Id = f.Id, FriendId = f.FriendId});
-                }
-                foreach (var m in user.ClientProfile.Messages)
-                {
-                    var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
-                    if (u == null)
-                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
-                    else
-                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
-                }
-                return userDto;
-            }
+                return await FindById(user.Id);
             return null;
         }
         public async Task<List<UserDTO>> FindByAge(int age)
@@ -224,33 +165,7 @@ namespace BLL.Services
             List<UserDTO> users = new List<UserDTO>();
             foreach (var user in aU)
             {
-                UserDTO userDto = new UserDTO();
-                List<string> a = new List<string>();
-                foreach (var r in user.Roles.ToList())
-                {
-                    a.Add(r.RoleId);
-                }
-                userDto.Info = user.ClientProfile.Info;
-                userDto.Address = user.ClientProfile.Address;
-                userDto.Age = user.ClientProfile.Age;
-                userDto.UserName = user.UserName;
-                userDto.Id = user.Id;
-                userDto.Email = user.Email;
-                userDto.Password = user.PasswordHash;
-                userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
-                userDto.Banned = user.ClientProfile.Banned;
-                foreach (var f in user.ClientProfile.Friends)
-                {
-                    userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
-                }
-                foreach (var m in user.ClientProfile.Messages)
-                {
-                    var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
-                    if (u == null)
-                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
-                    else
-                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
-                }
+                UserDTO userDto = await FindById(user.Id);
                 users.Add(userDto);
             }
             return users;

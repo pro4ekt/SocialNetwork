@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+.form-horizontal {
+    display: flex;
+    margin-right: -50%;
+    margin-left: 0%;
+    flex-direction: column;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border: solid black 5px;
+    border-radius: 20px;
+}
