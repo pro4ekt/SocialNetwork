@@ -211,6 +211,50 @@ namespace BLL.Services
             }
             return null;
         }
+        public async Task<List<UserDTO>> FindByAge(int age)
+        {
+            List<UserDTO> users = await FindAll();
+            var ageUsers = users.Where(c => c.Age == age).ToList();
+            return ageUsers;
+        }
+
+        public async Task<List<UserDTO>> FindAll()
+        {
+            List<ApplicationUser> aU = Database.UserManager.Users.ToList();
+            List<UserDTO> users = new List<UserDTO>();
+            foreach (var user in aU)
+            {
+                UserDTO userDto = new UserDTO();
+                List<string> a = new List<string>();
+                foreach (var r in user.Roles.ToList())
+                {
+                    a.Add(r.RoleId);
+                }
+                userDto.Info = user.ClientProfile.Info;
+                userDto.Address = user.ClientProfile.Address;
+                userDto.Age = user.ClientProfile.Age;
+                userDto.UserName = user.UserName;
+                userDto.Id = user.Id;
+                userDto.Email = user.Email;
+                userDto.Password = user.PasswordHash;
+                userDto.Role = Database.RoleManager.FindByIdAsync(a[0]).Result.Name;
+                userDto.Banned = user.ClientProfile.Banned;
+                foreach (var f in user.ClientProfile.Friends)
+                {
+                    userDto.Friends.Add(new FriendsDTO { Id = f.Id, FriendId = f.FriendId });
+                }
+                foreach (var m in user.ClientProfile.Messages)
+                {
+                    var u = await Database.UserManager.FindByIdAsync(m.ReceiverId);
+                    if (u == null)
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = "All", Text = m.Text, DateTime = m.DateTime });
+                    else
+                        userDto.Messages.Add(new MessagesDTO { MessageId = m.MessageId, Id = m.Id, ReceiverId = m.ReceiverId, ReceiverName = u.UserName, Text = m.Text, DateTime = m.DateTime });
+                }
+                users.Add(userDto);
+            }
+            return users;
+        }
 
         public async Task<bool> EditProfile(string id,string name, string email, string info, string address,int age, UserDTO user)
         {

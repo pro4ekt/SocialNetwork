@@ -1,83 +1,89 @@
-﻿@model BLL.DTO.UserDTO
-@if (@Model != null && @Model.Email != null)
+﻿@model List<BLL.DTO.UserDTO>
+@if (Model == null)
 {
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Info)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Info)
-        </dd>
-        @if (User.IsInRole("admin"))
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.Role)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Role)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Banned)
-            </dt>
-            <dd>
-                @Model.Banned
-            </dd>
-        }
-    </dl>
-    if (Model.Email != ViewBag.Email)
-    {
-        @Html.ActionLink("Add to friends", "AddFriend", "Client", new { friendId = Model.Id }, null)
-    }
-    if (User.IsInRole("admin") && Model.Role != "admin" && Model.Banned == false)
-    {
-        <br />
-        @Html.ActionLink("Ban User", "BanUser", "Client", new { userId = Model.Id }, null)
-        <br />
-        @Html.ActionLink("Users Messages", "YourMessages", "Client", new { id = Model.Id }, null)
-    }
-    if (User.IsInRole("admin") && Model.Role != "admin" && Model.Banned == true)
-    {
-        <br />
-        @Html.ActionLink("Unban User", "UnBanUser", "Client", new { userId = Model.Id }, null)
-        <br />
-        @Html.ActionLink("Users Messages", "YourMessages", "Client", new { id = Model.Id }, null)
-    }
-    <hr />
+    <p></p>
 }
-@if (Model.Email == null)
+@if (Model != null)
 {
-    <p>There is no user like this</p>
+    foreach (var user in Model)
+    {
+        if (user != null && user.Email != null)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    UserName
+                </dt>
+
+                <dd>
+                    @user.UserName
+                </dd>
+
+                <dt>
+                    Email
+                </dt>
+
+                <dd>
+                    @user.Email
+                </dd>
+
+                <dt>
+                    Age
+                </dt>
+
+                <dd>
+                    @user.Age.ToString()
+                </dd>
+
+                <dt>
+                    Address
+                </dt>
+
+                <dd>
+                    @user.Address
+                </dd>
+
+                <dt>
+                    Info
+                </dt>
+
+                <dd>
+                    @user.Info
+                </dd>
+                @if (User.IsInRole("admin"))
+                {
+                    <dt>
+                        Role
+                    </dt>
+                    <dd>
+                        @user.Role
+                    </dd>
+                    <dt>
+                        Banned
+                    </dt>
+                    <dd>
+                        @user.Banned.ToString()
+                    </dd>
+                }
+            </dl>
+            if (user.Email != ViewBag.Email)
+            {
+                @Html.ActionLink("Add to friends", "AddFriend", "Client", new { friendId = user.Id }, null)
+            }
+            if (User.IsInRole("admin") && user.Role != "admin" && user.Banned == false)
+            {
+                <br />
+                @Html.ActionLink("Ban User", "BanUser", "Client", new { userId = user.Id }, null)
+                <br />
+                @Html.ActionLink("Users Messages", "YourMessages", "Client", new { id = user.Id }, null)
+            }
+            if (User.IsInRole("admin") && user.Role != "admin" && user.Banned == true)
+            {
+                <br />
+                @Html.ActionLink("Unban User", "UnBanUser", "Client", new { userId = user.Id }, null)
+                <br />
+                @Html.ActionLink("Users Messages", "YourMessages", "Client", new { id = user.Id }, null)
+            }
+            <hr />
+        }
+    }
 }

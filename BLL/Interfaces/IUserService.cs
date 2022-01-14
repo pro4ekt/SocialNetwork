@@ -17,6 +17,8 @@ namespace BLL.Interfaces
         Task<UserDTO> FindByEmail(string email);
         Task<UserDTO> FindById(string id);
         Task<UserDTO> FindByName(string userName);
+        Task<List<UserDTO>> FindByAge(int age);
+        Task<List<UserDTO>> FindAll();
         Task<bool> EditProfile(string id, string name, string email, string info, string address, int age, UserDTO user);
         Task<bool> AddFriend(string id, string friendId);
         Task<bool> RemoveFriend(string id, string friendId);

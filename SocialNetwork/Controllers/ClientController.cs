@@ -59,7 +59,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
-        public async Task<ActionResult> FindUser(UserDTO u)
+        public async Task<ActionResult> FindUser(List<UserDTO> u)
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO u1 = await UserService.FindById(cookie.Value);
@@ -69,6 +69,7 @@ namespace SocialNetwork.Controllers
                 return RedirectToAction("Login", "Account");
             }
             ViewBag.Email = u1.Email;
+            u = (List<UserDTO>) TempData["List"];
             return View(u);
         }
 
@@ -79,13 +80,32 @@ namespace SocialNetwork.Controllers
         {
             if (userToFind.ToLower().Contains("@"))
             {
-                UserDTO u = await UserService.FindByEmail(userToFind);
-                return RedirectToAction("FindUser", u);
+                UserDTO user = await UserService.FindByEmail(userToFind);
+                List<UserDTO> uL = new List<UserDTO>();
+                uL.Add(user);
+                TempData["List"] = uL;
+                return RedirectToAction("FindUser");
+            }
+            if (userToFind.Equals(""))
+            {
+                List<UserDTO> uL = await UserService.FindAll();
+                TempData["List"] = uL;
+                return RedirectToAction("FindUser");
+            }
+            int result;
+            if (int.TryParse(userToFind, out result))
+            {
+                var uL = await UserService.FindByAge(result);
+                TempData["List"] = uL;
+                return RedirectToAction("FindUser");
             }
             else
             {
-                UserDTO u = await UserService.FindByName(userToFind);
-                return RedirectToAction("FindUser", u);
+                UserDTO user = await UserService.FindByName(userToFind);
+                List<UserDTO> uL = new List<UserDTO>();
+                uL.Add(user);
+                TempData["List"] = uL;
+                return RedirectToAction("FindUser");
             }
         }
 
