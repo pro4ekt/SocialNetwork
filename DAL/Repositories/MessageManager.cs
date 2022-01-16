@@ -25,8 +25,10 @@ namespace DAL.Repositories
         }
         public void Remove(Messages item)
         {
-            Database.Messages.Attach(item);
-            Database.Entry(item).State = EntityState.Deleted;
+            var m = Database.Messages.SingleOrDefault(a => a.MessageId == item.MessageId);
+            Database.Messages.Remove(m);
+            //Database.Messages.Attach(item);
+            //Database.Entry(item).State = EntityState.Deleted;
             Database.SaveChanges();
         }
         public Messages Find(string id)
