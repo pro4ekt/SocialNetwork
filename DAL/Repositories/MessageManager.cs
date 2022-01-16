@@ -33,7 +33,7 @@ namespace DAL.Repositories
         }
         public Messages Find(string id)
         {
-            return Database.Messages.Find(id);
+            return Database.Messages.SingleOrDefault(m=>m.MessageId == id);
         }
         public List<Messages> GetAll()
         {

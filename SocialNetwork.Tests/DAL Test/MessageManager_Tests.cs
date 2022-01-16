@@ -46,7 +46,7 @@ namespace SocialNetwork.Tests.DAL_Test
         }
 
         [TestMethod]
-        public async Task ClientManager_Remove()
+        public async Task MessageManager_Remove()
         {
             var message = new Messages {Id = "1",Text = "Aboba", MessageId = "testid"};
             service.Create(message);
@@ -55,17 +55,17 @@ namespace SocialNetwork.Tests.DAL_Test
             Assert.AreEqual(0, context.Messages.Count());
         }
 
-        //[TestMethod]
-        //public async Task ClientManager_Find()
-        //{
-        //    service.Create(new ClientProfile { Id = "1", Age = 5 });
-        //    service.Create(new ClientProfile { Id = "2", Age = 6 });
+        [TestMethod]
+        public async Task MessageManager_Find()
+        {
+            service.Create(new Messages { MessageId = "1", Text = "Test1" });
+            service.Create(new Messages { MessageId = "2", Text = "Test2" });
 
-        //    var client2 = service.Find("2");
-        //    var clientNull = service.Find("3");
+            var client2 = service.Find("2");
+            var clientNull = service.Find("3");
 
-        //    Assert.IsNotNull(client2);
-        //    Assert.IsNull(clientNull);
-        //}
+            Assert.IsNotNull(client2);
+            Assert.IsNull(clientNull);
+        }
     }
 }
