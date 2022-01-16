@@ -33,15 +33,12 @@ namespace DAL.Repositories
             Database.SaveChanges();
         }
 
-        public Friends Find(string id, string friendId)
-        {
-            var f = GetAll();
-            var f1 = f.Where(c => c.Id == id && c.FriendId == friendId).ToList()[0];
-            return f1;
-        }
         public void Remove(Friends item)
         {
-            Database.Friends.Remove(item);
+            var a = Database.Friends.SingleOrDefault(i => i.Id == item.Id && i.FriendId == item.FriendId);
+            Database.Friends.Remove(a);
+            var b = Database.Friends.SingleOrDefault(i => i.Id == item.FriendId && i.FriendId == item.Id);
+            Database.Friends.Remove(b);
             //Database.Friends.RemoveRange(Database.Friends.Where(f => (f.Id == item.Id && f.FriendId == item.FriendId)));
             //Database.Friends.RemoveRange(Database.Friends.Where(f => (f.Id == item.FriendId && f.FriendId == item.Id)));
             Database.SaveChanges();
