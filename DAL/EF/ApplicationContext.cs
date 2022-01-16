@@ -1,27 +1,23 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
 using DAL.Entities;
+using DAL.Interfaces;
 using Microsoft.AspNet.Identity.EntityFramework;
-using static System.Data.Entity.DbContext;
 
 namespace DAL.EF
 {
-    public class ApplicationContext : IdentityDbContext<ApplicationUser>, IDbContextFactory<ApplicationContext>
+    public class ApplicationContext : IdentityDbContext<ApplicationUser>, IApplicationContext
     {
-        public ApplicationContext()
+        public ApplicationContext() : base("AttachDbFilename=TestContext.mdf")
         {
 
         }
         public ApplicationContext(string conectionString) : base(conectionString) {}
 
-        public DbSet<ClientProfile> ClientProfiles { get; set; }
-        public DbSet<Friends> Friends { get; set; }
-        public DbSet<Messages> Messages { get; set; }
-
-        public ApplicationContext Create()
-        {
-            return new ApplicationContext();
-        }
+        public virtual DbSet<ClientProfile> ClientProfiles { get; set; }
+        public virtual DbSet<Friends> Friends { get; set; }
+        public virtual DbSet<Messages> Messages { get; set; }
     }
 }

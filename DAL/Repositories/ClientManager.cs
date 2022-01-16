@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using DAL.EF;
 using DAL.Entities;
 using DAL.Interfaces;
@@ -22,15 +24,20 @@ namespace DAL.Repositories
             Database.SaveChanges();
         }
 
-        public async Task<ClientProfile> Find(string id)
+        public ClientProfile Find(string id)
         {
-            return await Database.ClientProfiles.FindAsync(id);
+            return Database.ClientProfiles.Find(id);
         }
 
         public void Remove(ClientProfile item)
         {
             Database.ClientProfiles.Remove(item);
             Database.SaveChanges();
+        }
+
+        public List<ClientProfile> GetAll()
+        {
+            return Database.ClientProfiles.ToList();
         }
 
         public void Dispose()

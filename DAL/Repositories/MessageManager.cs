@@ -29,13 +29,18 @@ namespace DAL.Repositories
             Database.Entry(item).State = EntityState.Deleted;
             Database.SaveChanges();
         }
-        public async Task<Messages> Find(string id)
+        public Messages Find(string id)
         {
-            return await Database.Messages.FindAsync(id);
+            return Database.Messages.Find(id);
+        }
+        public List<Messages> GetAll()
+        {
+            return Database.Messages.ToList();
         }
         public void Dispose()
         {
             Database.Dispose();
         }
+
     }
 }

@@ -231,7 +231,7 @@ namespace BLL.Services
                 {
                     Id = id,
                     FriendId = friendId,
-                    ClientProfile = await Database.ClientManager.Find(id)
+                    ClientProfile = Database.ClientManager.Find(id)
                 };
                 Database.FriendsManager.Remove(f1);
                 await Database.SaveAsync();

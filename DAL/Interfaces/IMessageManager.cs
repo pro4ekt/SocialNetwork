@@ -11,6 +11,7 @@ namespace DAL.Interfaces
     {
         void Create(Messages item);
         void Remove(Messages item);
-        Task<Messages> Find(string id);
+        Messages Find(string id);
+        List<Messages> GetAll();
     }
 }

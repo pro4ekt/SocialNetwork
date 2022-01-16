@@ -65,6 +65,7 @@
     <Compile Include="Entities\Messages.cs" />
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
+    <Compile Include="Interfaces\IApplicationContext.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
     <Compile Include="Interfaces\IFriendsManager.cs" />
     <Compile Include="Interfaces\IMessageManager.cs" />

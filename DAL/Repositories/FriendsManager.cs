@@ -20,24 +20,30 @@ namespace DAL.Repositories
 
         public void Create(Friends item)
         {
-            Database.Friends.AddRange(new List<Friends>{
-                new Friends
-                {
-                    Id = item.Id,
-                    FriendId = item.FriendId
-                },
-                new Friends
-                {
-                    Id = item.FriendId,
-                    FriendId = item.Id,
-                }});
+            Database.Friends.Add(new Friends
+            {
+                Id = item.Id,
+                FriendId = item.FriendId
+            });
+            Database.Friends.Add(new Friends
+            {
+                Id = item.FriendId,
+                FriendId = item.Id,
+            });
             Database.SaveChanges();
         }
 
+        public Friends Find(string id, string friendId)
+        {
+            var f = GetAll();
+            var f1 = f.Where(c => c.Id == id && c.FriendId == friendId).ToList()[0];
+            return f1;
+        }
         public void Remove(Friends item)
         {
-            Database.Friends.RemoveRange(Database.Friends.Where(f => (f.Id == item.Id && f.FriendId == item.FriendId)));
-            Database.Friends.RemoveRange(Database.Friends.Where(f => (f.Id == item.FriendId && f.FriendId == item.Id)));
+            Database.Friends.Remove(item);
+            //Database.Friends.RemoveRange(Database.Friends.Where(f => (f.Id == item.Id && f.FriendId == item.FriendId)));
+            //Database.Friends.RemoveRange(Database.Friends.Where(f => (f.Id == item.FriendId && f.FriendId == item.Id)));
             Database.SaveChanges();
         }
 
