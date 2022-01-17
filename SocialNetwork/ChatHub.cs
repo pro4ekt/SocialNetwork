@@ -34,34 +34,10 @@ namespace SocialNetwork
 
         public async Task Send(string name ,string message)
         {
-            if (name == "")
-            {
-                try
-                {
-                    MessagesDTO messageDTO = new MessagesDTO
-                    {
-                        MessageId = RandomString(5),
-                        Id = Context.User.Identity.GetUserId(),
-                        ReceiverId = "All",
-                        ReceiverName = "All",
-                        DateTime = DateTime.Now,
-                        Text = message
-                    };
-                    await UserService.SaveMessage(messageDTO);
-                    Clients.All.addNewMessageToPage(Context.User.Identity.Name, message);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-            }
-            else
-            {
-                KeyValuePair<string, string> receiver = clients.FirstOrDefault(k => k.Value == name);
-                if (receiver.Equals(default(KeyValuePair<string, string>)))
+            KeyValuePair<string, string> receiver = clients.FirstOrDefault(k => k.Value == name);
+            if (receiver.Equals(default(KeyValuePair<string, string>)))
                     Clients.Caller.addNewMessageToPage("Server", "User offline");
-                else
+            else
                 {
                     try
                     {
@@ -85,7 +61,6 @@ namespace SocialNetwork
                         throw;
                     }
                 }
-            }
         }
 
         public override Task OnDisconnected(bool stopCalled)
