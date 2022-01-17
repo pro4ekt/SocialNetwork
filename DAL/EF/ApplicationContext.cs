@@ -10,11 +10,7 @@ namespace DAL.EF
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>, IApplicationContext
     {
-        public ApplicationContext() : base("AttachDbFilename=TestContext.mdf")
-        {
-
-        }
-        public ApplicationContext(string conectionString) : base(conectionString) {}
+        public ApplicationContext(string connectionString) : base(connectionString) {}
 
         public virtual DbSet<ClientProfile> ClientProfiles { get; set; }
         public virtual DbSet<Friends> Friends { get; set; }

@@ -18,7 +18,6 @@ namespace DAL.Repositories
         private IFriendsManager _friendsManager;
         private IMessageManager _messageManager;
 
-
         public IdentityUnitOfWork(string connectionString)
         {
             db = new ApplicationContext(connectionString);

@@ -15,13 +15,12 @@ namespace SocialNetwork.Tests
 {
     public class TestContext : ApplicationContext
     {
-        public TestContext()
+        public TestContext(string connectionString) : base(connectionString)
         {
             ClientProfiles = new TestClientProfileDbSet();
             Friends = new TestFriendsDbSet();
             Messages = new TestMessagesDbSet();
         }
-
         public override DbSet<ClientProfile> ClientProfiles { get; set; }
         public override DbSet<Friends> Friends { get; set; }
         public override DbSet<Messages> Messages { get; set; }
