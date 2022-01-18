@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using BLL.DTO;
 using BLL.Interfaces;
+using BLL.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.SignalR;
@@ -21,7 +22,8 @@ namespace SocialNetwork
         {
             get
             {
-                return HttpContext.Current.GetOwinContext().GetUserManager<IUserService>();
+                IServiceCreator service = new ServiceCreator();
+                return service.CreateUserService(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\TestContext.mdf';Integrated Security=True;Persist Security Info = True");
             }
         }
         private static ConcurrentDictionary<string, string> clients = new ConcurrentDictionary<string, string>();

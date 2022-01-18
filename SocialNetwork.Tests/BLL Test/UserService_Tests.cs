@@ -25,13 +25,86 @@ namespace SocialNetwork.Tests.BLL_Test
         }
 
         [TestMethod]
-        public async Task UserServise_Create()
+        public async Task UserServise_SetInitialData_AND_FindAll()
         {
-            var user = new UserDTO { Email = "test@gmail", Password = "qwerty", UserName = "Tester", Role = "user", Address = "S", Info = "add" };
+            var user1 = new UserDTO { Email = "user@gmail", Password = "qwerty", UserName = "Tester", Role = "user", Age = 5 };
+            var user2 = new UserDTO { Email = "admin@gmail", Password = "qwerty", UserName = "Admin", Role = "admin", Age = 5 };
             List<string> roles = new List<string> { "user", "admin" };
-            await service.SetInitialData(new List<UserDTO> {user}, roles);
+            await service.SetInitialData(new List<UserDTO> { user1, user2 }, roles);
+            var users = await service.FindAll();
 
-            Assert.IsNull(null);
+            Assert.IsNotNull(users);
+            Assert.AreEqual(2, users.Count);
+            Assert.AreEqual("Admin", users[1].UserName);
+        }
+
+        [TestMethod]
+        public async Task UserServise_FindById()
+        {
+            var user = await service.FindById("1a38a12a-b13e-4ba4-a815-ed2b3429d3df");
+
+            Assert.IsNotNull(user);
+            Assert.AreEqual("Tester", user.UserName);
+            Assert.AreEqual("user@gmail", user.Email);
+            Assert.AreEqual("user", user.Role);
+        }
+
+        [TestMethod]
+        public async Task UserServise_FindByEmail()
+        {
+            var user = await service.FindByEmail("user@gmail");
+
+            Assert.IsNotNull(user);
+            Assert.AreEqual("Tester", user.UserName);
+            Assert.AreEqual("user@gmail", user.Email);
+            Assert.AreEqual("user", user.Role);
+        }
+
+        [TestMethod]
+        public async Task UserServise_FindByName()
+        {
+            var user = await service.FindByName("Tester");
+
+            Assert.IsNotNull(user);
+            Assert.AreEqual("Tester", user.UserName);
+            Assert.AreEqual("user@gmail", user.Email);
+            Assert.AreEqual("user", user.Role);
+        }
+
+        [TestMethod]
+        public async Task UserServise_FindByAge()
+        {
+            var users = await service.FindByAge(5);
+
+            Assert.IsNotNull(users);
+            Assert.AreEqual(2,users.Count);
+        }
+
+        [TestMethod]
+        public async Task UserServise_Authenticate()
+        {
+            var user1 = await service.FindByName("Tester");
+            var claim1 = await service.Authenticate(user1);
+            var user2 = await service.FindByName("Test1");
+            var claim2 = await service.Authenticate(user2);
+
+            Assert.IsNotNull(claim1);
+            Assert.IsNull(claim2);
+        }
+
+        [TestMethod]
+        public async Task UserServise_Create_AND_Remove()
+        {
+            var u = new UserDTO { Email = "a@gmail", Password = "abcdefg", UserName = "Aboba", Role = "user", Age = 6 };
+
+            await service.Create(u);
+            var u1 = await service.FindByName(u.UserName);
+            await service.RemoveUser(u1.Id);
+            var u2 = await service.FindByName(u1.UserName);
+
+            Assert.IsNotNull(u1);
+            Assert.IsNull(u2);
+            Assert.AreEqual(u.Email, u1.Email);
         }
     }
 }

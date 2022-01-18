@@ -44,7 +44,6 @@ namespace BLL.Services
                 return new OperationDetails(false, "User with this login already exists", "Email");
             }
         }
-
         public async Task<bool> RemoveUser(string id)
         {
             ApplicationUser user = await Database.UserManager.FindByIdAsync(id);
@@ -74,7 +73,6 @@ namespace BLL.Services
             await Database.SaveAsync();
             return true;
         }
-
         public async Task<bool> UnBanUser(string id)
         {
             ApplicationUser user = await Database.UserManager.FindByIdAsync(id);
@@ -89,9 +87,9 @@ namespace BLL.Services
 
         public async Task<ClaimsIdentity> Authenticate(UserDTO userDto)
         {
-            ClaimsIdentity claim = null;
             // находим пользователя
             // авторизуем его и возвращаем объект ClaimsIdentity
+            ClaimsIdentity claim = null;
             if (userDto != null)
             {
                 ApplicationUser user = await Database.UserManager.FindByEmailAsync(userDto.Email);
@@ -276,7 +274,6 @@ namespace BLL.Services
                 return false;
             }
         }
-
         public async Task<bool> RemoveMessage(MessagesDTO messageDto)
         {
             try
@@ -320,7 +317,7 @@ namespace BLL.Services
 
         public void Dispose()
         {
-            //ПРИДУМАТЬ ШОТО С ДИСПОЗОМ
+            Database.Dispose();
         }
     }
 }
