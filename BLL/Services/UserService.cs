@@ -296,6 +296,27 @@ namespace BLL.Services
             }
         }
 
+        public async Task<List<MessagesDTO>> GetAllMessages()
+        {
+            List<Messages> mL = Database.MessageManager.GetAll();
+            List<MessagesDTO> messages = new List<MessagesDTO>();
+            foreach (var message in mL)
+            {
+                var u = await Database.UserManager.FindByIdAsync(message.ReceiverId);
+                MessagesDTO messagesDto = new MessagesDTO
+                {
+                    MessageId = message.MessageId,
+                    Id = message.Id,
+                    ReceiverId = message.ReceiverId,
+                    ReceiverName = u.UserName,
+                    Text = message.Text,
+                    DateTime = message.DateTime
+                };
+                messages.Add(messagesDto);
+            }
+            return messages;
+        }
+
         // начальная инициализация бд
         public async Task SetInitialData(List<UserDTO> usersDto, List<string> roles)
         {

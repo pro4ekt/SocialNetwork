@@ -25,6 +25,7 @@ namespace BLL.Interfaces
         Task<bool> CheckPassword(string email, string password);
         Task<bool> SaveMessage(MessagesDTO messageDto);
         Task<bool> RemoveMessage(MessagesDTO messageDto);
+        Task<List<MessagesDTO>> GetAllMessages();
         Task SetInitialData(List<UserDTO> usersDto, List<string> roles);
     }
 }

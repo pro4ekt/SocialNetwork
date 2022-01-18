@@ -26,12 +26,14 @@ namespace SocialNetwork
                 return service.CreateUserService(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename='|DataDirectory|\TestContext.mdf';Integrated Security=True;Persist Security Info = True");
             }
         }
+        private static List<MessagesDTO> messages = new List<MessagesDTO>();
         private static ConcurrentDictionary<string, string> clients = new ConcurrentDictionary<string, string>();
 
-        public override Task OnConnected()
+        public async override Task OnConnected()
         {
+            messages = await UserService.GetAllMessages();
             clients.TryAdd(Context.ConnectionId, Context.User.Identity.GetUserId());
-            return base.OnConnected();
+            await base.OnConnected();
         }
 
         public async Task Send(string name ,string message)

@@ -106,5 +106,77 @@ namespace SocialNetwork.Tests.BLL_Test
             Assert.IsNull(u2);
             Assert.AreEqual(u.Email, u1.Email);
         }
+
+        [TestMethod]
+        public async Task UserServise_BanUser_AND_UnBan()
+        {
+            var u = await service.FindByName("Tester");
+            var b1 = await service.BanUser(u.Id);
+            var b2 = await service.BanUser(u.Id);
+            var b3 = await service.UnBanUser(u.Id);
+            var b4 = await service.UnBanUser(u.Id);
+
+            Assert.IsTrue(b1);
+            Assert.IsFalse(b2);
+            Assert.IsTrue(b3);
+            Assert.IsFalse(b4);
+        }
+
+        [TestMethod]
+        public async Task UserServise_EditProfile()
+        {
+            var u1 = await service.FindByName("Tester");
+            var info1 = u1.Info;
+            var b1 = await service.EditProfile(u1.Id, u1.UserName, u1.Email, u1.Info+1, u1.Address, u1.Age, u1);
+
+            Assert.IsTrue(b1);
+            Assert.IsNotNull(u1);
+            Assert.AreNotEqual(info1, u1.Age);
+        }
+
+        [TestMethod]
+        public async Task UserServise_AddFriend_AND_RemoveFriend()
+        {
+            var users = await service.FindAll();
+            var b1 = await service.AddFriend(users[0].Id, users[0].Id);
+            var b2 = await service.AddFriend(users[0].Id, users[1].Id);
+            var b3 = await service.RemoveFriend(users[0].Id, users[1].Id);
+
+            Assert.IsFalse(b1);
+            Assert.IsTrue(b2);
+            Assert.IsTrue(b3);
+        }
+
+        [TestMethod]
+        public async Task UserServise_CheckPassword()
+        {
+            var b1 = await service.CheckPassword("user@gmail", "qwerty");
+            var b2 = await service.CheckPassword("user@gmail", "qwerta");
+
+            Assert.IsTrue(b1);
+            Assert.IsFalse(b2);
+        }
+
+        [TestMethod]
+        public async Task UserServise_SaveMessage_AND_RemoveMessage_AND()
+        {
+            MessagesDTO message1 = new MessagesDTO{ MessageId = "1", DateTime = DateTime.Today ,Text = "1", Id = "1a38a12a-b13e-4ba4-a815-ed2b3429d3df", ReceiverId = "eb852ca1-12fd-48c7-8133-761291b94cb5" };
+            MessagesDTO message2 = new MessagesDTO{ MessageId = "2", DateTime = DateTime.Today ,Text = "2", Id = "eb852ca1-12fd-48c7-8133-761291b94cb5", ReceiverId = "1a38a12a-b13e-4ba4-a815-ed2b3429d3df" };
+            var b1 = await service.SaveMessage(message1);
+            var b2 = await service.SaveMessage(message2);
+            var list = await service.GetAllMessages();
+            var b3 = await service.RemoveMessage(message1);
+            var b4 = await service.RemoveMessage(message2);
+
+            Assert.IsNotNull(list);
+            Assert.AreEqual(list[0].MessageId,message1.MessageId);
+            Assert.AreEqual(list[1].MessageId, message2.MessageId);
+            Assert.AreEqual(2,list.Count);
+            Assert.IsTrue(b1);
+            Assert.IsTrue(b2);
+            Assert.IsTrue(b3);
+            Assert.IsTrue(b4);
+        }
+
     }
 }
