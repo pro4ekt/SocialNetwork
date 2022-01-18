@@ -2825,7 +2825,6 @@ select[multiple].input-sm {
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
-  border-radius: 3px;
 }
 .form-group-sm select.form-control {
   height: 30px;
@@ -3062,17 +3061,6 @@ select[multiple].input-lg {
   .form-inline .has-feedback .form-control-feedback {
     top: 0;
   }
-}
-
-.form-horizontal {
-    display: flex;
-    margin-right: -50%;
-    margin-left: 0%;
-    flex-direction: column;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    border: solid black 5px;
-    border-radius: 20px;
 }
 
 .form-horizontal .radio,

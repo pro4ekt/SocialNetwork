@@ -15,7 +15,7 @@ namespace SocialNetwork.Tests.DAL_Test
         [TestInitialize]
         public void SetupContext()
         {
-            context = new TestContext(@"Data Source=(LocalDB)\MSSQLLocalDB;Database = Fake;Integrated Security=True;Persist Security Info = True");
+            context = new TestContext("FakeConnection");
             service = new ClientManager(context);
         }
 

@@ -11,7 +11,7 @@ namespace SocialNetwork.Tests.DAL_Test
         [TestMethod]
         public void IdentityUnitOfWorkReturnsManagers()
         {
-            IdentityUnitOfWork i = new IdentityUnitOfWork(@"Data Source=(LocalDB)\MSSQLLocalDB;Database = Fake;Integrated Security=True;Persist Security Info = True");
+            IdentityUnitOfWork i = new IdentityUnitOfWork("FakeConnection");
 
             var c = (ClientManager)i.ClientManager;
             var f = i.FriendsManager;

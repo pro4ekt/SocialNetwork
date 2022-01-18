@@ -21,7 +21,7 @@ namespace SocialNetwork.Tests.BLL_Test
         public void SetupContext()
         {
             creator = new ServiceCreator();
-            service = (UserService)creator.CreateUserService(@"Data Source=(LocalDB)\MSSQLLocalDB;Database = Fake;Integrated Security=True;Persist Security Info = True");
+            service = (UserService)creator.CreateUserService("FakeConnection");
         }
 
         [TestMethod]

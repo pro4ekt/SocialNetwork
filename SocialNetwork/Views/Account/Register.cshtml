@@ -11,10 +11,10 @@
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal" style="display: flex; flex-direction: column; margin-left: 25%; margin-right: 25%;">
+    <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group" style="margin-right: -50% ">
+        <div class="form-group">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="margin-right: -50% ">
+        <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="margin-right: -50% ">
+        <div class="form-group">
             @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="margin-right: -50% ">
+        <div class="form-group">
             @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
@@ -46,7 +46,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="margin-right: -50% ">
+        <div class="form-group">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="margin-right: -50% ">
+        <div class="form-group">
             @Html.LabelFor(model => model.Info, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control" } })
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="margin-right: -50% ">
+        <div class="form-group">
             @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Age, new { htmlAttributes = new { @class = "form-control" } })
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="form-group"  style="margin-left: 29% ">
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
@@ -78,7 +78,7 @@
     </div>
 }
 
-<div style="display: flex; justify-content: center; padding-top: 2%; padding-bottom: 5%;">
+<div>
     @Html.ActionLink("Login", "Login")
 </div>
 
