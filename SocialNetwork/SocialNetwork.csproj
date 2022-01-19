@@ -217,7 +217,6 @@
     <Content Include="Views\Client\_ProfileLayout.cshtml" />
     <Content Include="Views\Client\FindUser.cshtml" />
     <Content Include="Views\Client\EditUserProfile.cshtml" />
-    <Content Include="Views\Client\Home.cshtml" />
     <Content Include="Views\Client\Chat.cshtml" />
     <Content Include="Views\Client\YourFriends.cshtml" />
     <Content Include="Views\Client\FindUserResult.cshtml" />

@@ -18,6 +18,7 @@ namespace SocialNetwork.Models
         public string Password { get; set; }
 
         [Required]
+        [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
@@ -27,6 +28,8 @@ namespace SocialNetwork.Models
         public string Address { get; set; }
 
         [Required]
+        [Display(Name = "User Name")]
+        [RegularExpression(@"^[A-Za-zА-Яа-я][A-Za-zА-Яа-я0-9]{1,9}$", ErrorMessage = "User Name should be 2-10 letters and should not start with number and be 1 word")]
         [DataType(DataType.Text)]
         public string UserName { get; set; }
 

@@ -28,11 +28,14 @@ namespace SocialNetwork
         }
         private static List<MessagesDTO> messages = new List<MessagesDTO>();
         private static ConcurrentDictionary<string, string> clients = new ConcurrentDictionary<string, string>();
+        private static bool f;
 
         public async override Task OnConnected()
         {
             messages = await UserService.GetAllMessages();
+            messages = new List<MessagesDTO>(messages.OrderBy(ma=> ma.DateTime));
             clients.TryAdd(Context.ConnectionId, Context.User.Identity.GetUserId());
+            f = false;
             await base.OnConnected();
         }
 
@@ -42,29 +45,31 @@ namespace SocialNetwork
             if (receiver.Equals(default(KeyValuePair<string, string>)))
                     Clients.Caller.addNewMessageToPage("Server", "User offline");
             else
+            {
+                try
                 {
-                    try
+                    AppendChat(receiver, f);
+                    f = true;
+                    UserDTO u = await UserService.FindById(receiver.Value);
+                    MessagesDTO messageDTO = new MessagesDTO
                     {
-                        UserDTO u = await UserService.FindById(receiver.Value);
-                        MessagesDTO messageDTO = new MessagesDTO
-                        {
-                            MessageId = RandomString(6),
-                            Id = Context.User.Identity.GetUserId(),
-                            ReceiverId = receiver.Value,
-                            ReceiverName = u.UserName,
-                            DateTime = DateTime.Now,
-                            Text = message
-                        };
-                        await UserService.SaveMessage(messageDTO);
-                        Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, message);
-                        Clients.Caller.addNewMessageToPage(Context.User.Identity.Name, message);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
+                        MessageId = RandomString(6),
+                        Id = Context.User.Identity.GetUserId(),
+                        ReceiverId = receiver.Value,
+                        ReceiverName = u.UserName,
+                        DateTime = DateTime.Now,
+                        Text = message
+                    };
+                    await UserService.SaveMessage(messageDTO);
+                    Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, message);
+                    Clients.Caller.addNewMessageToPage(Context.User.Identity.Name, message);
                 }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
         }
 
         public override Task OnDisconnected(bool stopCalled)
@@ -80,6 +85,19 @@ namespace SocialNetwork
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public void AppendChat(KeyValuePair<string, string> receiver, bool b)
+        {
+            if (b == false)
+            {
+                var m = messages.Where(u => (u.Id == Context.User.Identity.GetUserId() && u.ReceiverId == receiver.Value) || (u.Id == receiver.Value && u.ReceiverId == Context.User.Identity.GetUserId())).OrderBy(a => a.DateTime);
+                foreach (var mess in m)
+                {
+                    Clients.Client(receiver.Key).addNewMessageToPage(Context.User.Identity.Name, mess.Text);
+                    Clients.Caller.addNewMessageToPage(Context.User.Identity.Name, mess.Text);
+                }
+            }
         }
     }
 }

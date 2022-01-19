@@ -128,7 +128,7 @@ namespace SocialNetwork.Controllers
             {
                 return RedirectToAction("EditUserProfile");
             }
-            return View("Home");
+            return RedirectToAction("Profile");
         }
 
         [Authorize]
@@ -138,7 +138,7 @@ namespace SocialNetwork.Controllers
             UserDTO u2 = await UserService.FindById(friendId);
             bool b = await UserService.AddFriend(cookie.Value, u2.Id);
             if(b)
-                return RedirectToAction("Home");
+                return RedirectToAction("YourFriends");
             return RedirectToAction("FindUser",u2);
         }
 
@@ -149,7 +149,7 @@ namespace SocialNetwork.Controllers
             UserDTO u2 = await UserService.FindById(friendId);
             bool b = await UserService.RemoveFriend(cookie.Value, u2.Id);
             if (b)
-                return RedirectToAction("Home");
+                return RedirectToAction("YourFriends");
             return RedirectToAction("YourFriends");
         }
 
@@ -219,20 +219,20 @@ namespace SocialNetwork.Controllers
                 DateTime = date
             };
             await UserService.RemoveMessage(message);
-            return RedirectToAction("Home");
+            return RedirectToAction("YourMessages");
         }
 
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> BanUser(string userId)
         {
             await UserService.BanUser(userId);
-            return RedirectToAction("Home");
+            return RedirectToAction("FindUser");
         }
         [Authorize(Roles = "admin")]
         public async Task<ActionResult> UnBanUser(string userId)
         {
             await UserService.UnBanUser(userId);
-            return RedirectToAction("Home");
+            return RedirectToAction("FindUser");
         }
     }
 }
