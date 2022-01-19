@@ -16,34 +16,9 @@ namespace SocialNetwork.Controllers
     [Authorize]
     public class ClientController : Controller
     {
-        private IUserService UserService
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().GetUserManager<IUserService>();
-            }
-        }
+        private IUserService UserService => HttpContext.GetOwinContext().GetUserManager<IUserService>();
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
-        [Authorize]
-        public async Task<ActionResult> Home()
-        {
-            HttpCookie cookie = Request.Cookies["user"];
-            UserDTO u1 = await UserService.FindById(cookie.Value);
-            if (u1.Banned)
-            {
-                AuthenticationManager.SignOut();
-                return RedirectToAction("Login", "Account");
-            }
-            return View();
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         [Authorize]
         public new async Task<ActionResult> Profile()
