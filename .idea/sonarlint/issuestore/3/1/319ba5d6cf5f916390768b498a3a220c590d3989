@@ -1,8 +1,8 @@
 
-Ncsharpsquid:S1125W"*Remove the unnecessary Boolean literal(s).(ò»ıĞ8àÜÒç/
-Scsharpsquid:S1125j"*Remove the unnecessary Boolean literal(s).(èÈ¼ğıÿÿÿÿ8àÜÒç/
+Ncsharpsquid:S1125["*Remove the unnecessary Boolean literal(s).(ò»ıĞ8àÜÒç/
+Scsharpsquid:S1125o"*Remove the unnecessary Boolean literal(s).(èÈ¼ğıÿÿÿÿ8àÜÒç/
 jcsharpsquid:S1155""HUse '.Any()' to test whether this 'IEnumerable<string>' is empty or not.(Í…ßóşÿÿÿÿ
 hcsharpsquid:S3881"KFix this implementation of 'IDisposable' to conform to the dispose pattern.(Ûá€œ
-Xcsharpsquid:S112‚"5'System.Exception' should not be thrown by user code.(‰Æáe8áÜÒç/
-Xcsharpsquid:S112 "5'System.Exception' should not be thrown by user code.(‰Æáe8áÜÒç/
-Hcsharpsquid:S125¨"Remove this commented out code.(ËÙ‰ôûÿÿÿÿ8âÜÒç/
+Xcsharpsquid:S112"5'System.Exception' should not be thrown by user code.(‰Æáe8áÜÒç/
+Xcsharpsquid:S112­"5'System.Exception' should not be thrown by user code.(‰Æáe8áÜÒç/
+Hcsharpsquid:S125µ"Remove this commented out code.(ËÙ‰ôûÿÿÿÿ8âÜÒç/

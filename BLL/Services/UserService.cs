@@ -37,6 +37,8 @@ namespace BLL.Services
                     await Database.UserManager.AddToRoleAsync(user.Id, userDto.Role);
                     // создаем профиль клиента
                     ClientProfile clientProfile = new ClientProfile { Id = user.Id, Address = userDto.Address, Age = userDto.Age, Info = userDto.Info };
+                    if(userDto.Age < 0)
+                        return new OperationDetails(false, "ты уже родился", "Age");
                     Database.ClientManager.Create(clientProfile);
                     await Database.SaveAsync();
                     return new OperationDetails(true, "Register succesfull", "");

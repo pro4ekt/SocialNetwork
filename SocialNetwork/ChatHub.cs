@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 using BLL.DTO;
 using BLL.Interfaces;
 using BLL.Services;
@@ -42,15 +43,18 @@ namespace SocialNetwork
         public async Task Send(string name ,string message)
         {
             KeyValuePair<string, string> receiver = clients.FirstOrDefault(k => k.Value == name);
-            if (receiver.Equals(default(KeyValuePair<string, string>)))
-                    Clients.Caller.addNewMessageToPage("Server", "User offline");
+            UserDTO u = await UserService.FindById(receiver.Value);
+            UserDTO u1 = await UserService.FindById(Context.User.Identity.GetUserId());
+            if(u1.Banned)
+                Clients.Caller.addNewMessageToPage("Server", "You Have been banned");
+            else if (receiver.Equals(default(KeyValuePair<string, string>)))
+                Clients.Caller.addNewMessageToPage("Server", "User offline");
             else
             {
                 try
                 {
                     AppendChat(receiver, f);
                     f = true;
-                    UserDTO u = await UserService.FindById(receiver.Value);
                     MessagesDTO messageDTO = new MessagesDTO
                     {
                         MessageId = RandomString(6),
@@ -66,6 +70,7 @@ namespace SocialNetwork
                 }
                 catch (Exception e)
                 {
+                    Console.WriteLine(DateTime.Now + "Chat");
                     Console.WriteLine(e);
                     throw;
                 }

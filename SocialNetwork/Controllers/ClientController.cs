@@ -13,6 +13,7 @@ using SocialNetwork.Models;
 
 namespace SocialNetwork.Controllers
 {
+
     [Authorize]
     public class ClientController : Controller
     {
@@ -21,34 +22,27 @@ namespace SocialNetwork.Controllers
         private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         [Authorize]
+        [BanCheck]
         public new async Task<ActionResult> Profile()
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO u = await UserService.FindById(cookie.Value);
-            if (u.Banned)
-            {
-                AuthenticationManager.SignOut();
-                return RedirectToAction("Login", "Account");
-            }
             return View(u);
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> FindUser(List<UserDTO> u)
         {
             HttpCookie cookie = Request.Cookies["user"];
-            UserDTO u1 = await UserService.FindById(cookie.Value);
-            if (u1.Banned)
-            {
-                AuthenticationManager.SignOut();
-                return RedirectToAction("Login", "Account");
-            }
-            ViewBag.Email = u1.Email;
+            UserDTO user = await UserService.FindById(cookie.Value);
+            ViewBag.Email = user.Email;
             u = (List<UserDTO>) TempData["List"];
             return View(u);
         }
 
         [Authorize]
+        [BanCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> FindUser(string userToFind)
@@ -85,6 +79,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> EditUserProfile()
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -93,6 +88,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
+        [BanCheck]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditUserProfile(UserDTO model)
@@ -107,6 +103,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> AddFriend(string friendId)
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -118,6 +115,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> RemoveFriend(string friendId)
         {
             HttpCookie cookie = Request.Cookies["user"];
@@ -129,15 +127,11 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> YourFriends()
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO  u1 = await UserService.FindById(cookie.Value);
-            if (u1.Banned)
-            {
-                AuthenticationManager.SignOut();
-                return RedirectToAction("Login", "Account");
-            }
             List<UserDTO> users = new List<UserDTO>();
             foreach (var f in u1.Friends)
             {
@@ -147,31 +141,23 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> Chat(string friendId)
         {
             HttpCookie cookie = Request.Cookies["user"];
             UserDTO u1 = await UserService.FindById(cookie.Value);
-            if (u1.Banned)
-            {
-                AuthenticationManager.SignOut();
-                return RedirectToAction("Login","Account");
-            }
             ViewBag.FriendId = friendId;
             return View();
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> YourMessages(string id)
         {
             if (id == null)
             {
                 HttpCookie cookie = Request.Cookies["user"];
                 UserDTO u1 = await UserService.FindById(cookie.Value);
-                if (u1.Banned)
-                {
-                    AuthenticationManager.SignOut();
-                    return RedirectToAction("Login", "Account");
-                }
                 return View(u1.Messages);
             }
             else
@@ -182,6 +168,7 @@ namespace SocialNetwork.Controllers
         }
 
         [Authorize]
+        [BanCheck]
         public async Task<ActionResult> RemoveMessage(string messageId,string id, string receiverId, string receiverName ,DateTime date, string text)
         {
             MessagesDTO message = new MessagesDTO

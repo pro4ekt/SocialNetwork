@@ -16,6 +16,7 @@ namespace DAL.Entities
         public int Age { get; set; }
         public string Info { get; set; }
         public bool Banned { get; set; }
+        public string Country { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
         public virtual List<Friends> Friends { get; set; }

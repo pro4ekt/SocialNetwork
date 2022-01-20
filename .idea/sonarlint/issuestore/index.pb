@@ -7,3 +7,5 @@ X
 (SocialNetwork/Views/Account/Login.cshtml,5\8\5834a6ea46789bb24acacba39085974f798a7968
 ^
 .SocialNetwork/Controllers/AccountController.cs,7\d\7db5b1fbcd4486adaae5f2324212ec5407ac1289
+K
+BLL/Services/UserService.cs,3\1\319ba5d6cf5f916390768b498a3a220c590d3989
